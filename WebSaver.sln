@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scr", "Scr\Scr.csproj", "{68C9B2AF-A318-4934-9629-1AA3BD869E00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{DAA7AA7B-BE8D-46C8-8838-05FFC6044F7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrGen", "ScrGen\ScrGen.csproj", "{004A3C5B-35B2-4838-BA59-FD84284BA76D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResUpd", "ResUpd\ResUpd.csproj", "{9C775745-8C40-48C8-ACE0-93FF7C6E7628}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{9AC7C3A0-CF14-465C-9A92-F2D172CE20AD}"
+	ProjectSection(SolutionItems) = preProject
+		Build\clean.bat = Build\clean.bat
+		Build\Readme.txt = Build\Readme.txt
+		Build\sample.bat = Build\sample.bat
+		Build\scr.bat = Build\scr.bat
+		Build\scrgen.bat = Build\scrgen.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{C0F681D1-5EAC-4213-92C9-A7FFA4B937A5}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Sample\caption.txt = Build\Sample\caption.txt
+		Build\Sample\icon.ico = Build\Sample\icon.ico
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{1D29945C-DEFF-498B-8001-5AB1F329AE72}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Sample\content\index.html = Build\Sample\content\index.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{AD3D024A-2799-444B-8684-17B01669E94C}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Sample\content\js\phoria.js = Build\Sample\content\js\phoria.js
+		Build\Sample\content\js\scene.js = Build\Sample\content\js\scene.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{7EB05AE1-48C2-4331-BB85-C9C823CB64F5}"
+	ProjectSection(SolutionItems) = preProject
+		Build\Sample\content\css\style.css = Build\Sample\content\css\style.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{7D264656-3A6A-4EB1-96C3-804301D17461}"
+	ProjectSection(SolutionItems) = preProject
+		Binaries\Readme.txt = Binaries\Readme.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68C9B2AF-A318-4934-9629-1AA3BD869E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68C9B2AF-A318-4934-9629-1AA3BD869E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68C9B2AF-A318-4934-9629-1AA3BD869E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68C9B2AF-A318-4934-9629-1AA3BD869E00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA7AA7B-BE8D-46C8-8838-05FFC6044F7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA7AA7B-BE8D-46C8-8838-05FFC6044F7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA7AA7B-BE8D-46C8-8838-05FFC6044F7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{004A3C5B-35B2-4838-BA59-FD84284BA76D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{004A3C5B-35B2-4838-BA59-FD84284BA76D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{004A3C5B-35B2-4838-BA59-FD84284BA76D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{004A3C5B-35B2-4838-BA59-FD84284BA76D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C775745-8C40-48C8-ACE0-93FF7C6E7628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C775745-8C40-48C8-ACE0-93FF7C6E7628}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C775745-8C40-48C8-ACE0-93FF7C6E7628}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C775745-8C40-48C8-ACE0-93FF7C6E7628}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C0F681D1-5EAC-4213-92C9-A7FFA4B937A5} = {9AC7C3A0-CF14-465C-9A92-F2D172CE20AD}
+		{1D29945C-DEFF-498B-8001-5AB1F329AE72} = {C0F681D1-5EAC-4213-92C9-A7FFA4B937A5}
+		{AD3D024A-2799-444B-8684-17B01669E94C} = {1D29945C-DEFF-498B-8001-5AB1F329AE72}
+		{7EB05AE1-48C2-4331-BB85-C9C823CB64F5} = {1D29945C-DEFF-498B-8001-5AB1F329AE72}
+	EndGlobalSection
+EndGlobal

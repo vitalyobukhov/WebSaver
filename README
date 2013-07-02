@@ -1,0 +1,64 @@
+Web Screensaver Generator.
+
+Create your own win32 screensavers using widely used client-side web languages: HTML, CSS and JavaScript.
+
+Minimal requirements
+
+	.NET Framework 4.5
+	Internet Explorer 10
+
+Before start
+
+	Please check out "Readme.txt" files especially one in "Build" directory".
+	Command-line applications should be self-describing.
+
+Users FAQ
+
+	Q: Example, please!
+	A: "Build" directory -> Launch "sample.bat" -> No errors -> Launch "sample.scr".
+	
+	Q: How to create screensaver from scratch?
+	A: Prepare your screensaver source files directory. Top level "index.html" is mandatory. It could also include related web content (javascript, css, images), user-friendly screensaver caption ("caption.txt") and icon ("icon.txt"). Then open command prompt -> cd to "Build" directory -> scr.bat screensaver_source_directory output_screensaver_filename. Or just drag & drop your directory to "scr.bat" and enter output screensaver file path.
+	
+	Q: Do I need all these files to create screensavers?
+	A: No, you just need "ScrGen.exe" from "Binaries" directory. But you won't be able to drag & drop your content to it.
+	
+	Q: How to install screensaver?
+	A: You should have administrative privileges to make it available for everyone. Then place it into system32 directory (Win+R -> %windir%\system32). You can also right click -> install screensaver just for you.
+	
+	Q: How to uninstall it?
+	A: Just choose another screensaver and delete related .scr file from system32 directory.
+
+Advanced users FAQ
+
+	Q: Why I'm getting security warning popups on my page?
+	A: Add <!-- saved from url=(0016)http://localhost --> after <!DOCTYPE html> node (you're using this one, right?).
+
+	Q: My web page get rendered in wrong browser or document mode. Any ideas?
+	A: Make sure that your html <head> node contains <meta http-equiv="X-UA-Compatible" content="IE=edge"> at the very beginning (or after title and charset). Check HKLM\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION via regedit for DWORD 10000. The same for Wow6432Node.
+	
+	Q: Why preview of my screensaver is so ugly?
+	A: There is no scaling of web page on screensaver module side. You can try to add such logic in web content javascript.
+	
+	Q: Why there are no settings?
+	A: Which settings? :)
+
+Developers FAQ
+
+	Q: Why .NET Framework 4.5?
+	A: ScrGen packs content into zip archive to store embed it as resource. I don't want to use 3rd party assembly or use something like DeflateStream. The same about new .NET features.
+	
+	Q: Why IE10?
+	A: There is no easy way to use WebKit for such small project. I'm even didn't use 3rd party libraries. IE10 was chosen for common-sense reason. I can disable IE10 restriction and you will be able to use previous versions of IE but... Well, you know. Yes, it uses IE ActiveX inside.
+	
+	Q: Will it work on another platforms?
+	A: Probably no. It uses much of Win32 API to handle resources, windows, user input, etc. You can try it yourself.
+	
+	Q: Why so much P/Invoke, byte-level ops, inheriting, error handling, no xml comments and other crazy stuff? Why not X?
+	A: I supposed this will be enough for project of such size. And because it's fun, why else?
+	
+	Q: I want cool feature X!
+	A: Just fork it.
+	
+	Q: License?
+	A: MIT.

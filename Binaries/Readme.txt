@@ -1,0 +1,1 @@
+This directory contains the latest compiled version of ScrGen (screensaver generator) application.
