@@ -1,11 +1,14 @@
 :: scrgen build script
 
+
 @ECHO OFF
 @SETLOCAL
 
 
 :: set vars
 IF [%~1]==[] (SET config=Release) ELSE (SET config=%~1)
+SET res_type=42
+SET res_name=0
 SET root=%~dp0..
 
 :: projects
@@ -18,18 +21,13 @@ SET binaries=Binaries
 :: paths
 SET msbuild64=%windir%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe
 SET msbuild32=%windir%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe
-SET msbuild=msbuild32
+SET msbuild=MSBuild.exe
 SET solution=%root%\WebSaver.sln
 SET resupd_exe=%root%\%resupd%\bin\%config%\%resupd%.exe
 SET scrgen_in=%root%\%scrgen%\bin\%config%\%scrgen%.exe
 SET scr_exe=%root%\%scr%\bin\%config%\%scr%.exe
-SET scrgen_out=%root%\%build%\%scrgen%.exe
 SET bin=%root%\%binaries%
-SET scrgen_out_bin=%bin%\%scrgen%.exe
-
-:: resource args
-SET res_type=42
-SET res_name=0
+SET scrgen_out=%bin%\%scrgen%.exe
 
 
 :: start build
@@ -38,11 +36,8 @@ SET res_name=0
 @ECHO.
 
 :: set msbuild path
-IF EXIST %msbuild64% (
-	SET msbuild=%msbuild64%
-) ELSE IF EXIST %msbuild32% (
-	SET msbuild=%msbuild32%
-)
+IF EXIST %msbuild64% (SET msbuild=%msbuild64%) ELSE IF EXIST %msbuild32% (SET msbuild=%msbuild32%)
+
 :: check msbuild path
 SET ERROR=0
 CALL:checkexist %msbuild%
@@ -64,7 +59,9 @@ IF %ERROR% NEQ 0 EXIT /B
 
 :: delete old scrgen
 CALL:trydelete %scrgen_out%
-CALL:trydelete %scrgen_out_bin%
+
+:: create scrgen directory
+IF NOT EXIST %bin% (@MD %bin%)
 
 :: inject screensaver into scrgen
 @ECHO Starting %resupd%...
@@ -72,14 +69,6 @@ CALL:trydelete %scrgen_out_bin%
 IF %ERRORLEVEL% NEQ 0 EXIT /B
 @ECHO %resupd% successfully finished.
 @ECHO.
-
-:: copy binary
-@ECHO Copying %scrgen%...
-IF NOT EXIST %bin% (@MD %bin%)
-@COPY /Y %scrgen_out% %scrgen_out_bin%
-IF %ERRORLEVEL% NEQ 0 EXIT /B
-@ECHO %scrgen% successfully copied.
-ECHO.
 
 :: end build
 @ECHO %scrgen% build successfully completed.

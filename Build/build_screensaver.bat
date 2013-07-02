@@ -5,6 +5,7 @@
 ::   %3  output screensaver file path or icon file path
 ::   %4  output screensaver file path
 
+
 @ECHO OFF
 @SETLOCAL
 
@@ -16,7 +17,7 @@ SET root=%~dp0..
 SET scrgen=ScrGen
 
 :: paths
-SET scrgen_exe=%root%\Build\%scrgen%.exe
+SET scrgen_exe=%root%\Binaries\%scrgen%.exe
 SET scrgen_bat=%root%\Build\scrgen.bat
 
 :: set args count
@@ -28,17 +29,14 @@ IF %argc%==1 (
 	SET src=%~1
 	SET /P out="Output screensaver file path: "
 	CALL:trimext %out%
-)
-IF %argc%==2 (
+) ELSE IF %argc%==2 (
 	SET src=%~1
 	SET out=%~n2.scr
-)
-IF %argc%==3 (
+) ELSE IF %argc%==3 (
 	SET src=%~1
 	SET cap=%~2
 	SET out=%~n3.scr
-)
-IF %argc%==4 (
+) ELSE IF %argc%==4 (
 	SET src=%~1
 	SET cap=%~2
 	SET ico=%~3

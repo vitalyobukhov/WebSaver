@@ -2,6 +2,7 @@
 ::
 ::   /Q  key specifies no-prompt mode
 
+
 @ECHO OFF
 @SETLOCAL
 
@@ -29,7 +30,6 @@ SET scr_bin=%root%\%scr%\bin
 SET scr_obj=%root%\%scr%\obj
 SET scrgen_bin=%root%\%scrgen%\bin
 SET scrgen_obj=%root%\%scrgen%\obj
-SET build_exe=%root%\%build%\*.exe
 SET build_scr=%root%\%build%\*.scr
 SET bin_exe=%root%\%bin%\*.exe
 
@@ -52,7 +52,6 @@ IF EXIST %scrgen_bin% RMDIR /S /Q %scrgen_bin%
 IF EXIST %scrgen_obj% RMDIR /S /Q %scrgen_obj%
 
 @ECHO Cleaning %build%...
-IF EXIST %build_exe% DEL /Q %build_exe%
 IF EXIST %build_scr% DEL /Q %build_scr%
 
 @ECHO Cleaning %bin%...

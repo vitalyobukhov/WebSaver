@@ -11,38 +11,34 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResUpd", "ResUpd\ResUpd.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{9AC7C3A0-CF14-465C-9A92-F2D172CE20AD}"
 	ProjectSection(SolutionItems) = preProject
+		Build\build_sample.bat = Build\build_sample.bat
+		Build\build_screensaver.bat = Build\build_screensaver.bat
+		Build\build_scrgen.bat = Build\build_scrgen.bat
 		Build\clean.bat = Build\clean.bat
 		Build\Readme.txt = Build\Readme.txt
-		Build\sample.bat = Build\sample.bat
-		Build\scr.bat = Build\scr.bat
-		Build\scrgen.bat = Build\scrgen.bat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{C0F681D1-5EAC-4213-92C9-A7FFA4B937A5}"
 	ProjectSection(SolutionItems) = preProject
 		Build\Sample\caption.txt = Build\Sample\caption.txt
 		Build\Sample\icon.ico = Build\Sample\icon.ico
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{1D29945C-DEFF-498B-8001-5AB1F329AE72}"
-	ProjectSection(SolutionItems) = preProject
-		Build\Sample\content\index.html = Build\Sample\content\index.html
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{AD3D024A-2799-444B-8684-17B01669E94C}"
-	ProjectSection(SolutionItems) = preProject
-		Build\Sample\content\js\phoria.js = Build\Sample\content\js\phoria.js
-		Build\Sample\content\js\scene.js = Build\Sample\content\js\scene.js
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{7EB05AE1-48C2-4331-BB85-C9C823CB64F5}"
-	ProjectSection(SolutionItems) = preProject
-		Build\Sample\content\css\style.css = Build\Sample\content\css\style.css
+		Build\sample\index.html = Build\sample\index.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{7D264656-3A6A-4EB1-96C3-804301D17461}"
 	ProjectSection(SolutionItems) = preProject
 		Binaries\Readme.txt = Binaries\Readme.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{E45DDEC5-F780-4A19-BE41-4A2F63743275}"
+	ProjectSection(SolutionItems) = preProject
+		Build\sample\css\style.css = Build\sample\css\style.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{A766FE2E-AE6B-41C8-94CE-0CA6856D409E}"
+	ProjectSection(SolutionItems) = preProject
+		Build\sample\js\phoria.js = Build\sample\js\phoria.js
+		Build\sample\js\scene.js = Build\sample\js\scene.js
 	EndProjectSection
 EndProject
 Global
@@ -72,8 +68,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C0F681D1-5EAC-4213-92C9-A7FFA4B937A5} = {9AC7C3A0-CF14-465C-9A92-F2D172CE20AD}
-		{1D29945C-DEFF-498B-8001-5AB1F329AE72} = {C0F681D1-5EAC-4213-92C9-A7FFA4B937A5}
-		{AD3D024A-2799-444B-8684-17B01669E94C} = {1D29945C-DEFF-498B-8001-5AB1F329AE72}
-		{7EB05AE1-48C2-4331-BB85-C9C823CB64F5} = {1D29945C-DEFF-498B-8001-5AB1F329AE72}
+		{E45DDEC5-F780-4A19-BE41-4A2F63743275} = {C0F681D1-5EAC-4213-92C9-A7FFA4B937A5}
+		{A766FE2E-AE6B-41C8-94CE-0CA6856D409E} = {C0F681D1-5EAC-4213-92C9-A7FFA4B937A5}
 	EndGlobalSection
 EndGlobal

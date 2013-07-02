@@ -1,7 +1,7 @@
-This directory contains build scripts for WebSaver solution.
+This directory contains batch build scripts for WebSaver solution.
 
-  scrgen.bat  builds ScrGen (screensaver generator) application (includes post-build screensaver module embedding)
-  scr.bat     builds screensaver application (starts ScrGen with source content directory path, caption file path [nonmandatory], icon file path [nonmandatory] and output screensaver file path arguments)
-  sample.bat  builds sample screensaver (using "Sample" directory)
-  clean.bat   cleans solution (bin, obj directories; Binaries\*.exe, Build\*.scr, Build\*.exe files)
+	build_scrgen          builds ScrGen (screensaver generator) application (includes post-build screensaver module embedding)
+	build_screensaver     builds screensaver application (starts ScrGen with source content directory path, nonmandatory caption file path, nonmandatory icon file path and output screensaver file path arguments)
+	build_sample          builds sample screensaver (using "Sample" directory)
+	clean                 cleans solution (bin, obj directories; Binaries\*.exe, Build\*.scr files)
   
