@@ -27,21 +27,22 @@ FOR %%x IN (%*) DO SET /A argc+=1
 IF %argc%==1 (
 	SET src=%~1
 	SET /P out="Output screensaver file path: "
+	CALL:trimext %out%
 )
 IF %argc%==2 (
 	SET src=%~1
-	SET out=%~2
+	SET out=%~n2.scr
 )
 IF %argc%==3 (
 	SET src=%~1
 	SET cap=%~2
-	SET out=%~3
+	SET out=%~n3.scr
 )
 IF %argc%==4 (
 	SET src=%~1
 	SET cap=%~2
 	SET ico=%~3
-	SET out=%~4
+	SET out=%~n4.scr
 )
 
 :: start build
@@ -72,9 +73,13 @@ IF %ERRORLEVEL% NEQ 0 EXIT /B
 GOTO:EOF
 
 
+:trimext
+	SET out=%~1n
+GOTO:EOF
+
 :: delete file if exists
 :trydelete
-	IF EXIST %~1 DEL /F %~1
+	IF EXIST %~1 DEL /Q %~1
 GOTO:EOF
 
 :: check file exists with error

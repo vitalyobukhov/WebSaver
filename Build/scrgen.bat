@@ -88,7 +88,7 @@ GOTO:EOF
 
 :: delete file if exists
 :trydelete
-	IF EXIST %~1 DEL /F %~1
+	IF EXIST %~1 DEL /Q %~1
 GOTO:EOF
 
 :: check file exists with error

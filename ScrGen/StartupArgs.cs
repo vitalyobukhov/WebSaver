@@ -241,31 +241,27 @@ namespace ScrGen
     {
         private static bool ReviseInjectContentArgs(string[] arguments)
         {
-            return arguments[1].EndsWith(Constants.OutputExtension);
+            return true;
         }
 
         private static bool ReviseInjectContentCaptionIconLatentArgs(string[] arguments)
         {
-            return arguments[1].EndsWith(Constants.OutputExtension);
+            return true;
         }
 
         private static bool ReviseInjectContentCaptionArgs(string[] arguments)
         {
-            return arguments[1].EndsWith(Constants.CaptionExtension) &&
-                arguments[2].EndsWith(Constants.OutputExtension);
+            return arguments[1].EndsWith(Constants.CaptionExtension);
         }
 
         private static bool ReviseInjectContentIconArgs(string[] arguments)
         {
-            return arguments[1].EndsWith(Constants.IconExtension) &&
-                arguments[2].EndsWith(Constants.OutputExtension);
+            return arguments[1].EndsWith(Constants.IconExtension);
         }
 
         private static bool ReviseInjectContentCaptionIconArgs(string[] arguments)
         {
-            return arguments[1].EndsWith(Constants.CaptionExtension) &&
-                arguments[2].EndsWith(Constants.IconExtension) &&
-                arguments[3].EndsWith(Constants.OutputExtension);
+            return true;
         }
 
         // resolve args from string using internal mapping logic
