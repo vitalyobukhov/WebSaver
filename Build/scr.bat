@@ -74,7 +74,7 @@ GOTO:EOF
 
 
 :trimext
-	SET out=%~1n
+	IF NOT [%~n1]==[] SET out=%~n1.scr
 GOTO:EOF
 
 :: delete file if exists
