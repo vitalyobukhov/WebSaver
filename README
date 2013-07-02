@@ -1,24 +1,24 @@
 Web Screensaver Generator.
 
-Create your own win32 screensavers using widely used client-side web languages: HTML, CSS and JavaScript.
+Create your own win32 screensavers using mainstream client-side web languages: HTML, CSS and JavaScript.
 
 Minimal requirements
 
-	.NET Framework 4.5
-	Internet Explorer 10
+	.NET Framework 4.5    http://www.microsoft.com/en-us/download/details.aspx?id=30653
+	Internet Explorer 10  http://windows.microsoft.com/en-us/internet-explorer/download-ie
 
 Before start
 
-	Please check out "Readme.txt" files especially one in "Build" directory".
-	Command-line applications should be self-describing.
+	Please check out "Readme.txt" files especially one in "Build" directory.
+	Command-line application should be self-describing.
 
-Users FAQ
+FAQ
 
 	Q: Example, please!
-	A: "Build" directory -> Launch "sample.bat" -> No errors -> Launch "sample.scr".
+	A: "Build" directory -> Launch "build_screensaver.bat" -> No errors -> Launch "sample.scr".
 	
 	Q: How to create screensaver from scratch?
-	A: Prepare your screensaver source files directory. Top level "index.html" is mandatory. It could also include related web content (javascript, css, images), user-friendly screensaver caption ("caption.txt") and icon ("icon.txt"). Then open command prompt -> cd to "Build" directory -> scr.bat screensaver_source_directory output_screensaver_filename. Or just drag & drop your directory to "scr.bat" and enter output screensaver file path.
+	A: Prepare your screensaver source files directory. Top level "index.html" is mandatory. It could also include related web content (javascript, css, images), user-friendly screensaver caption ("caption.txt") and icon ("icon.ico"). Then open command prompt -> cd to "Build" directory -> build_screensaver.bat screensaver_source_directory output_screensaver_filename. Or just drag & drop your directory to "build_screensaver.bat" and enter output screensaver file path.
 	
 	Q: Do I need all these files to create screensavers?
 	A: No, you just need "ScrGen.exe" from "Binaries" directory. But you won't be able to drag & drop your content to it.
@@ -29,12 +29,12 @@ Users FAQ
 	Q: How to uninstall it?
 	A: Just choose another screensaver and delete related .scr file from system32 directory.
 
-Advanced users FAQ
+Advanced FAQ
 
 	Q: Why I'm getting security warning popups on my page?
 	A: Add <!-- saved from url=(0016)http://localhost --> after <!DOCTYPE html> node (you're using this one, right?).
 
-	Q: My web page get rendered in wrong browser or document mode. Any ideas?
+	Q: My web page get rendered in wrong browser mode or document mode. Any ideas?
 	A: Make sure that your html <head> node contains <meta http-equiv="X-UA-Compatible" content="IE=edge"> at the very beginning (or after title and charset). Check HKLM\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION via regedit for DWORD 10000. The same for Wow6432Node.
 	
 	Q: Why preview of my screensaver is so ugly?
@@ -55,7 +55,7 @@ Developers FAQ
 	A: Probably no. It uses much of Win32 API to handle resources, windows, user input, etc. You can try it yourself.
 	
 	Q: Why so much P/Invoke, byte-level ops, inheriting, error handling, no xml comments and other crazy stuff? Why not X?
-	A: I supposed this will be enough for project of such size. And because it's fun, why else?
+	A: I supposed this will be enough for such tiny project. And because it's fun, why else?
 	
 	Q: I want cool feature X!
 	A: Just fork it.

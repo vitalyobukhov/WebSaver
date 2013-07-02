@@ -18,7 +18,7 @@ SET scrgen=ScrGen
 
 :: paths
 SET scrgen_exe=%root%\Binaries\%scrgen%.exe
-SET scrgen_bat=%root%\Build\scrgen.bat
+SET scrgen_bat=%root%\Build\build_scrgen.bat
 
 :: set args count
 SET argc=0
