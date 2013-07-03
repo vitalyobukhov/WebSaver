@@ -9,3 +9,6 @@
 
 _ReSharper*/
 *.[Rr]e[Ss]harper
+
+[Bb]uild/*.scr
+[Bb]uild/*.exe

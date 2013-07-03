@@ -1,4 +1,4 @@
-This directory contains batch build scripts for WebSaver solution.
+This directory contains batch build scripts for solution.
 
 	build_scrgen          builds ScrGen (screensaver generator) application (includes post-build screensaver module embedding)
 	build_screensaver     builds screensaver application (starts ScrGen with source content directory path, nonmandatory caption file path, nonmandatory icon file path and output screensaver file path arguments)
