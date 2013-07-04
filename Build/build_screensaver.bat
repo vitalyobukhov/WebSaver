@@ -17,30 +17,38 @@ SET root=%~dp0..
 SET scrgen=ScrGen
 
 :: paths
-SET scrgen_exe=%root%\Binaries\%scrgen%.exe
-SET scrgen_bat=%root%\Build\build_scrgen.bat
+SET scrgen_exe="%root%\Binaries\%scrgen%.exe"
+SET scrgen_bat="%root%\Build\build_scrgen.bat"
 
 :: set args count
 SET argc=0
 FOR %%x IN (%*) DO SET /A argc+=1
 
 :: set args
+:setargs
+IF %argc%==1 SET /P out=Output screensaver file path: 
 IF %argc%==1 (
-	SET src=%~1
-	SET /P out="Output screensaver file path: "
+	IF [%out%]==[] GOTO setargs
+	SET src=%1
 	CALL:trimext %out%
-) ELSE IF %argc%==2 (
-	SET src=%~1
-	SET out=%~n2.scr
-) ELSE IF %argc%==3 (
-	SET src=%~1
-	SET cap=%~2
-	SET out=%~n3.scr
-) ELSE IF %argc%==4 (
-	SET src=%~1
-	SET cap=%~2
-	SET ico=%~3
-	SET out=%~n4.scr
+)
+IF %argc%==2 (
+	@ECHO 2
+	SET src=%1
+	SET out="%~n2.scr"
+) 
+IF %argc%==3 (
+	@ECHO 3
+	SET src=%1
+	SET cap=%2
+	SET out="%~n3.scr"
+) 
+IF %argc%==4 (
+	@ECHO 4
+	SET src=%1
+	SET cap=%2
+	SET ico=%3
+	SET out="%~n4.scr"
 )
 
 :: start build
@@ -57,7 +65,7 @@ CALL:checkexist %scrgen_exe%
 IF %ERROR% NEQ 0 EXIT /B
 
 :: delete old output
-IF DEFINED out CALL:trydelete %out%
+IF EXIST %out% CALL:trydelete %out%
 
 :: run scrgen
 @ECHO Starting %scrgen%...
@@ -72,18 +80,18 @@ GOTO:EOF
 
 
 :trimext
-	IF NOT [%~n1]==[] SET out=%~n1.scr
+	IF NOT [%~n1.scr]==[%~1] SET out="%~n1.scr"
 GOTO:EOF
 
 :: delete file if exists
 :trydelete
-	IF EXIST %~1 DEL /Q %~1
+	IF EXIST %1 DEL /Q %1
 GOTO:EOF
 
 :: check file exists with error
 :checkexist
-	IF NOT EXIST %~1 (
+	IF NOT EXIST %1 (
 		SET ERROR=1
-		@ECHO File does not exist %~1
+		@ECHO File does not exist %1
 	)
 GOTO:EOF

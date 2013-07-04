@@ -6,7 +6,7 @@
 
 
 :: set vars
-IF [%~1]==[] (SET config=Release) ELSE (SET config=%~1)
+IF [%1]==[] (SET config=Release) ELSE (SET config=%~1)
 SET res_type=42
 SET res_name=0
 SET root=%~dp0..
@@ -19,15 +19,15 @@ SET build=Build
 SET binaries=Binaries
 
 :: paths
-SET msbuild64=%windir%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe
-SET msbuild32=%windir%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe
+SET msbuild64="%windir%\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe"
+SET msbuild32="%windir%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
 SET msbuild=MSBuild.exe
-SET solution=%root%\WebSaver.sln
-SET resupd_exe=%root%\%resupd%\bin\%config%\%resupd%.exe
-SET scrgen_in=%root%\%scrgen%\bin\%config%\%scrgen%.exe
-SET scr_exe=%root%\%scr%\bin\%config%\%scr%.exe
-SET bin=%root%\%binaries%
-SET scrgen_out=%bin%\%scrgen%.exe
+SET solution="%root%\WebSaver.sln"
+SET resupd_exe="%root%\%resupd%\bin\%config%\%resupd%.exe"
+SET scrgen_in="%root%\%scrgen%\bin\%config%\%scrgen%.exe"
+SET scr_exe="%root%\%scr%\bin\%config%\%scr%.exe"
+SET bin="%root%\%binaries%"
+SET scrgen_out="%root%\%binaries%\%scrgen%.exe"
 
 
 :: start build
@@ -36,7 +36,8 @@ SET scrgen_out=%bin%\%scrgen%.exe
 @ECHO.
 
 :: set msbuild path
-IF EXIST %msbuild64% (SET msbuild=%msbuild64%) ELSE IF EXIST %msbuild32% (SET msbuild=%msbuild32%)
+IF EXIST %msbuild32% (SET msbuild=%msbuild32%)
+IF EXIST %msbuild64% (SET msbuild=%msbuild64%) 
 
 :: check msbuild path
 SET ERROR=0
@@ -77,13 +78,13 @@ GOTO:EOF
 
 :: delete file if exists
 :trydelete
-	IF EXIST %~1 DEL /Q %~1
+	IF EXIST %1 DEL /Q %1
 GOTO:EOF
 
 :: check file exists with error
 :checkexist
-	IF NOT EXIST %~1 (
+	IF NOT EXIST %1 (
 		SET ERROR=1
-		@ECHO File does not exist %~1
+		@ECHO File does not exist %1
 	)
 GOTO:EOF

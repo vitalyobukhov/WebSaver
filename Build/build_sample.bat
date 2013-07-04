@@ -13,13 +13,13 @@ SET scrgen=ScrGen
 SET sample=sample
 
 :: paths
-SET scrgen_exe=%root%\Binaries\%scrgen%.exe
-SET build_scrgen=%root%\Build\build_scrgen.bat
-SET build_scr=%root%\Build\build_screensaver.bat
-SET con=%root%\Build\%sample%
-SET cap=%root%\Build\%sample%\caption.txt
-SET ico=%root%\Build\%sample%\icon.ico
-SET scr_out=%root%\Build\sample.scr
+SET scrgen_exe="%root%\Binaries\%scrgen%.exe"
+SET build_scrgen="%root%\Build\build_scrgen.bat"
+SET build_scr="%root%\Build\build_screensaver.bat"
+SET con="%root%\Build\%sample%"
+SET cap="%root%\Build\%sample%\caption.txt"
+SET ico="%root%\Build\%sample%\icon.ico"
+SET scr_out="%root%\Build\sample.scr"
 
 
 :: start build
@@ -46,13 +46,13 @@ GOTO:EOF
 
 :: delete file if exists
 :trydelete
-	IF EXIST %~1 DEL /Q %~1
+	IF EXIST %1 DEL /Q %1
 GOTO:EOF
 
 :: check file exists with error
 :checkexist
-	IF NOT EXIST %~1 (
+	IF NOT EXIST %1 (
 		SET ERROR=1
-		@ECHO File does not exist %~1
+		@ECHO File does not exist %1
 	)
 GOTO:EOF
