@@ -2,8 +2,8 @@ window.onload = function() {
 
 		// set source canvas logical dimensions to fullscreen size
 		var canvas = document.getElementById('canvas');
-		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
+		canvas.width = canvas.parentNode.clientWidth;
+		canvas.height = canvas.parentNode.clientHeight;
 
 		// init plasma effect settings
 		var settings = { 
