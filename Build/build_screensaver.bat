@@ -33,18 +33,15 @@ IF %argc%==1 (
 	CALL:trimext %out%
 )
 IF %argc%==2 (
-	@ECHO 2
 	SET src=%1
 	SET out="%~n2.scr"
 ) 
 IF %argc%==3 (
-	@ECHO 3
 	SET src=%1
 	SET cap=%2
 	SET out="%~n3.scr"
 ) 
 IF %argc%==4 (
-	@ECHO 4
 	SET src=%1
 	SET cap=%2
 	SET ico=%3

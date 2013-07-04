@@ -19,7 +19,7 @@ SET build_scr="%root%\Build\build_screensaver.bat"
 SET con="%root%\Build\%sample%"
 SET cap="%root%\Build\%sample%\caption.txt"
 SET ico="%root%\Build\%sample%\icon.ico"
-SET scr_out="%root%\Build\sample.scr"
+SET scr_out="%root%\Build\PLASMA.SCR"
 
 
 :: start build
