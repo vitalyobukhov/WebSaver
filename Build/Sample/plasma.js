@@ -1,13 +1,12 @@
-function Plasma(document, canvas, settings) {
+function Plasma(window, canvas, settings) {
+	
+	var started = false;
+	var srcCanvas, srcContent, srcImage, srcData;
+	var dstCanvas, dstContent;
 
-	var srccnv, srccnt, image, data;
-	var dstcnv, dstcnt;
-
-	var COLOR_VAL_MAX, COLOR_VAL_HALF, COLOR_VAL_MIN;
-	var SPEED_MIN_DIV, SPEED_MAX_DIV;
-	var TIME_DIV, SCALE_DIV;
-
-	var scale, width, height, diag;
+	var colorMinVal, colorHalfVal, colorMaxVal;
+	var minSpeedDiv, maxSpeedDiv, timeDiv, scaleDiv;
+	var width, height, diag;
 
 	var rcx1, rcy1, gcx1, gcy1, bcx1, bcy1;
 	var rcx2, rcy2, gcx2, gcy2, bcx2, bcy2;
@@ -16,45 +15,63 @@ function Plasma(document, canvas, settings) {
 	var rsx2, rsy2, gsx2, gsy2, bsx2, bsy2;
 	
 	
-	function initSourceCanvas(document) {
-		srccnv = document.createElement('canvas');
-		if (srccnv.getContext === undefined || 
-			(srccnt = srccnv.getContext('2d')) === undefined)
-			throw 'Canvas not supported';
+	function initRequestAnimationFrame(w) {
+		var requestAnimationFrame = w.requestAnimationFrame || 
+			w.mozRequestAnimationFrame ||
+			w.webkitRequestAnimationFrame || 
+			w.msRequestAnimationFrame;
+			
+		window.requestAnimationFrame = requestAnimationFrame;
 	}
 	
-	function initDestinationCanvas(document, canvas) {
-		dstcnv = canvas;
-		if (dstcnv === null ||
-			dstcnv.getContext === undefined ||
-			(dstcnt = dstcnv.getContext('2d')) === undefined)
-			throw 'Canvas not found';
-	}
-	
-	function initSettings(settings) {
-		COLOR_VAL_MAX = 255;
-		COLOR_VAL_HALF = 127;
-		COLOR_VAL_MIN = 0;
+	function initCanvas(d, c) {
 
-		SPEED_MIN_DIV = 40.0;
-		SPEED_MAX_DIV = 20.0;
-		TIME_DIV = 100.0;
-		SCALE_DIV = 20;
+		srcCanvas = d.createElement('canvas');
+		if (srcCanvas.getContext === undefined || 
+			(srcContent = srcCanvas.getContext('2d')) === undefined) {
+			throw 'Canvas is not supported';
+		}
 		
-		scale = (settings.scale === undefined || settings.scale <= 0) ? SCALE_DIV : settings.scale;
+		dstCanvas = c;
+		if (dstCanvas === null ||
+			dstCanvas.getContext === undefined ||
+			(dstContent = dstCanvas.getContext('2d')) === undefined) {
+			throw 'Canvas was not found';
+		}
+	}
+	
+	function getSetting(s, k, d) {
+		return (s[k] !== undefined && s[k] > 0) ? s[k] : d;
+	}
+	
+	function initSettings(s) {
+		var colorMinValDef = 0;
+		var colorMaxValDef = 255;
+		var speedMinDivDef = 40;
+		var speedMaxDivDef = 20;
+		var timeDivDef = 100;
+		var scaleDivDef = 20;
+		
+		colorMinVal = getSetting(s, 'colorMinVal', colorMinValDef);
+		colorMaxVal = getSetting(s, 'colorMaxVal', colorMaxValDef);
+		colorHalfVal = Math.floor((colorMinVal + colorMaxVal) / 2);
+		speedMinDiv = getSetting(s, 'speedMinDiv', speedMinDivDef);
+		speedMaxDiv = getSetting(s, 'speedMaxDiv', speedMaxDivDef);
+		timeDiv = getSetting(s, 'timeDiv', timeDivDef);
+		scaleDiv = getSetting(s, 'scaleDiv', scaleDivDef); 
 	}
 	
 	function initDimensions() {
-		width = Math.round(dstcnv.width / scale);
-		height = Math.round(dstcnv.height / scale);
+		width = Math.round(dstCanvas.width / scaleDiv);
+		height = Math.round(dstCanvas.height / scaleDiv);
 		diag = Math.sqrt(width * width + height * height);
 		
-		srccnv.width = width;
-		srccnv.height = height;
-		image = srccnt.getImageData(0, 0, srccnv.width, srccnv.height);
-		data = image.data;
+		srcCanvas.width = width;
+		srcCanvas.height = height;
+		srcImage = srcContent.getImageData(0, 0, srcCanvas.width, srcCanvas.height);
+		srcData = srcImage.data;
 		
-		dstcnt.scale(dstcnv.width / width, dstcnv.height / height);
+		dstContent.scale(dstCanvas.width / width, dstCanvas.height / height);
 	}
 	
 	function initCordinates() {
@@ -74,10 +91,10 @@ function Plasma(document, canvas, settings) {
 	}
 	
 	function initSpeeds() {
-		var sxb = 1.0 * width / SPEED_MIN_DIV;
-		var sxa = 1.0 * width / SPEED_MAX_DIV;
-		var syb = 1.0 * height / SPEED_MIN_DIV;
-		var sya = 1.0 * height / SPEED_MAX_DIV;
+		var sxb = width / speedMinDiv;
+		var sxa = width / speedMaxDiv;
+		var syb = height / speedMinDiv;
+		var sya = height / speedMaxDiv;
 		
 		rsx1 = sxb + Math.random() * sxa;
 		rsy1 = syb + Math.random() * sya;
@@ -99,26 +116,26 @@ function Plasma(document, canvas, settings) {
         var dx = cx - tx;
         var dy = cy - ty;
 		
-        return 1.0 - Math.sqrt(dx * dx + dy * dy) / diag;
+        return 1 - Math.sqrt(dx * dx + dy * dy) / diag;
     };
 	
 	var getNewCordinate = function (cord, speed, size, time) {
-        var rem = (speed * time) % (2.0 * size);
+        var rem = (speed * time) % (2 * size);
         var val;
 		
-        if (cord + rem >= 0.0 && cord + rem < size){
+        if (cord + rem >= 0 && cord + rem < size) {
             val = cord + rem;
         } else if (cord + rem > size) {
-            if (cord + rem > 2.0 * size) {
-                val = cord + rem - 2.0 * size;
+            if (cord + rem > 2 * size) {
+                val = cord + rem - 2 * size;
             } else {
                 val = size - (cord + rem - size);
             }
         } else {
-            if ( cord + rem < -1.0 * size) {
-                val = size - (-1.0 * (cord + rem) - size);
+            if ( cord + rem < -1 * size) {
+                val = size - (-1 * (cord + rem) - size);
             } else {
-                val = -1.0 * (cord + rem);
+                val = -1 * (cord + rem);
             }
         }
 
@@ -127,7 +144,11 @@ function Plasma(document, canvas, settings) {
 	
 
 	this.draw = function (time) {
-        var t = time / TIME_DIV;
+		if (time === undefined) {
+			time = Date.now();
+		}
+	
+        var t = time / timeDiv;
         var rcx1n, rcy1n, gcx1n, gcy1n, bcx1n, bcy1n;
         var rcx2n, rcy2n, gcx2n, gcy2n, bcx2n, bcy2n;
         var rn, gn, bn;
@@ -149,31 +170,50 @@ function Plasma(document, canvas, settings) {
                 bcx2n = getNewCordinate(bcx2, bsx2, width, t);
                 bcy2n = getNewCordinate(bcy2, bsy2, height, t);
 
-                rn = COLOR_VAL_HALF + COLOR_VAL_MAX * (getColorWeight(rcx1n, rcy1n, x, y) - getColorWeight(rcx2n, rcy2n, x, y));
-                gn = COLOR_VAL_HALF + COLOR_VAL_MAX * (getColorWeight(gcx1n, gcy1n, x, y) - getColorWeight(gcx2n, gcy2n, x, y));
-                bn = COLOR_VAL_HALF + COLOR_VAL_MAX * (getColorWeight(bcx1n, bcy1n, x, y) - getColorWeight(bcx2n, bcy2n, x, y));
+                rn = colorHalfVal + colorMaxVal * (getColorWeight(rcx1n, rcy1n, x, y) - getColorWeight(rcx2n, rcy2n, x, y));
+                gn = colorHalfVal + colorMaxVal * (getColorWeight(gcx1n, gcy1n, x, y) - getColorWeight(gcx2n, gcy2n, x, y));
+                bn = colorHalfVal + colorMaxVal * (getColorWeight(bcx1n, bcy1n, x, y) - getColorWeight(bcx2n, bcy2n, x, y));
 
-                rn = rn > COLOR_VAL_MAX ? COLOR_VAL_MAX : (rn < COLOR_VAL_MIN ? COLOR_VAL_MIN : rn);
-                gn = gn > COLOR_VAL_MAX ? COLOR_VAL_MAX : (gn < COLOR_VAL_MIN ? COLOR_VAL_MIN : gn);
-                bn = bn > COLOR_VAL_MAX ? COLOR_VAL_MAX : (bn < COLOR_VAL_MIN ? COLOR_VAL_MIN : bn);
+                rn = rn > colorMaxVal ? colorMaxVal : (rn < colorMinVal ? colorMinVal : rn);
+                gn = gn > colorMaxVal ? colorMaxVal : (gn < colorMinVal ? colorMinVal : gn);
+                bn = bn > colorMaxVal ? colorMaxVal : (bn < colorMinVal ? colorMinVal : bn);
 
 				o = (y * width + x) * 4;
-                data[o + 0] = rn;
-				data[o + 1] = gn;
-				data[o + 2] = bn;
-				data[o + 3] = 255;
+                srcData[o + 0] = rn;
+				srcData[o + 1] = gn;
+				srcData[o + 2] = bn;
+				srcData[o + 3] = 255;
             }
         }
 
-        srccnt.putImageData(image, 0, 0);	
-		dstcnt.drawImage(srccnv, 0, 0);
+        srcContent.putImageData(srcImage, 0, 0);	
+		dstContent.drawImage(srcCanvas, 0, 0);
+		
+		if (started) {
+			var that = this;
+			requestAnimationFrame(function() { that.draw(); });
+		}
     };
 	
+	this.start = function() {
+		started = true;
+		var that = this;
+		requestAnimationFrame(function() { that.draw(); });
+	};
 	
-	initSourceCanvas(document);
-	initDestinationCanvas(document, canvas);
+	this.stop = function() {
+		started = false;
+	};
+	
+	
+	if (window === undefined) {
+		throw 'Window was not provided';
+	}
+	
+	initRequestAnimationFrame(window);
+	initCanvas(window.document, canvas);
 	initSettings(settings || {});
 	initDimensions();
 	initCordinates();
 	initSpeeds();
-};
+}
