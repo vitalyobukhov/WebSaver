@@ -22,23 +22,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{C0F681
 	ProjectSection(SolutionItems) = preProject
 		Build\Sample\caption.txt = Build\Sample\caption.txt
 		Build\Sample\icon.ico = Build\Sample\icon.ico
-		Build\sample\index.html = Build\sample\index.html
+		Build\Sample\index.html = Build\Sample\index.html
+		Build\Sample\main.js = Build\Sample\main.js
+		Build\Sample\plasma.js = Build\Sample\plasma.js
+		Build\Sample\styles.css = Build\Sample\styles.css
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{7D264656-3A6A-4EB1-96C3-804301D17461}"
 	ProjectSection(SolutionItems) = preProject
 		Binaries\Readme.txt = Binaries\Readme.txt
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{E45DDEC5-F780-4A19-BE41-4A2F63743275}"
-	ProjectSection(SolutionItems) = preProject
-		Build\sample\css\style.css = Build\sample\css\style.css
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{A766FE2E-AE6B-41C8-94CE-0CA6856D409E}"
-	ProjectSection(SolutionItems) = preProject
-		Build\sample\js\phoria.js = Build\sample\js\phoria.js
-		Build\sample\js\scene.js = Build\sample\js\scene.js
 	EndProjectSection
 EndProject
 Global
@@ -67,7 +59,5 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C0F681D1-5EAC-4213-92C9-A7FFA4B937A5} = {9AC7C3A0-CF14-465C-9A92-F2D172CE20AD}
-		{E45DDEC5-F780-4A19-BE41-4A2F63743275} = {C0F681D1-5EAC-4213-92C9-A7FFA4B937A5}
-		{A766FE2E-AE6B-41C8-94CE-0CA6856D409E} = {C0F681D1-5EAC-4213-92C9-A7FFA4B937A5}
 	EndGlobalSection
 EndGlobal
