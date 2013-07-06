@@ -2,7 +2,7 @@
 	window.onload = function() {
 
 		// set source canvas logical dimensions to fullscreen size
-		var canvas = document.getElementById('canvas');
+		var canvas = document.getElementById('plasma');
 		canvas.width = canvas.parentNode.clientWidth;
 		canvas.height = canvas.parentNode.clientHeight;
 
@@ -26,5 +26,5 @@
 			// ...except some awful cases
 			window.alert(ex.toString());
 		}
-	}
+	};
 })();

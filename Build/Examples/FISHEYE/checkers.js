@@ -48,37 +48,7 @@ function Checkers(canvas, settings) {
 		draw = s.draw !== undefined ? s.draw : false;
 	}
 	
-	
-	this.getFirstColor = function() { 
-		return firstColor; 
-	}
-	
-	this.setFirstColor = function(val) { 
-		var result = isColor(val);
-		if (result) firstColor = val;
-		return result;
-	}
-	
-	this.getSecondColor = function() { 
-		return secondColor; 
-	}
-	
-	this.setSecondColor = function(val) { 
-		var result = isColor(val);
-		if (result) secondColor = val;
-		return result;
-	}
-	
-	this.getMinCount = function() { 
-		return minCount; 
-	}
-	
-	this.setMinCount = function(val) { 
-		var result = isPositive(val);
-		if (result) minCount = val;
-		return result;
-	}
-	
+
 	// draw checkers
 	this.draw = function() {
 		

@@ -1,6 +1,6 @@
 (function() {
-	window.onload = function() {
 
+	window.onload = function() {
 		var canvas = document.getElementById('checkers');
 		canvas.width = canvas.parentNode.clientWidth;
 		canvas.height = canvas.parentNode.clientHeight;

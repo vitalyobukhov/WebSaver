@@ -45,7 +45,7 @@ function Fisheye(window, canvas, settings) {
 			w.msRequestAnimationFrame;
 		
 		if (!w.requestAnimationFrame) 
-			throw 'RequestAnimationFrame is not supported by browser'
+			throw 'RequestAnimationFrame is not supported by browser';
 	
 		if (!c)
 			throw 'Canvas element was not found';
