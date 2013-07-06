@@ -15,7 +15,7 @@ namespace Common
         public const ushort MainGroupIconName = 32512;
 
         // screensaver output extension
-        public const string OutputExtension = ".scr";
+        public const string OutputExtension = ".SCR";
 
         // caption file default extension
         public const string CaptionExtension = ".txt";

@@ -2,6 +2,7 @@
 *.user
 *.sln.docstates
 *.bak
+*.scr
 
 [Dd]ebug/
 [Rr]elease/

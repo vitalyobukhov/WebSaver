@@ -1,9 +1,8 @@
 //
-// plasma effect experiment
-// by Vitaly Obukhov
-// web port ver 1.4 for WebSaver
+// HTML5 Canvas "Plasma" Experiment
 //
-// original idea by http://monkeyfighter.com/plasmatutor.html
+// for WebSaver project
+// by Vitaly Obukhov, 2013
 //
 
 function Plasma(window, canvas, settings) {
@@ -12,8 +11,8 @@ function Plasma(window, canvas, settings) {
 	var started = false;
 	
 	// canvas, content, image and data objects
-	var srcCanvas, srcContent, srcImage, srcData;
-	var dstCanvas, dstContent;
+	var srcCanvas, srcContext, srcImage, srcData;
+	var dstCanvas, dstContext;
 
 	// color intervals
 	var colorMinVal, colorHalfVal, colorMaxVal;
@@ -59,15 +58,15 @@ function Plasma(window, canvas, settings) {
 	
 		// invisible small drawing canvas element
 		srcCanvas = w.document.createElement('canvas');
-		srcContent = srcCanvas.getContext('2d');
+		srcContext = srcCanvas.getContext('2d');
 		
 		// provided large visible canvas element
 		dstCanvas = c;
-		dstContent = dstCanvas.getContext('2d');
+		dstContext = dstCanvas.getContext('2d');
 	}
 	
 	// get settings value by key and default
-	function getSetting(s, k, d) {
+	function getPositiveSetting(s, k, d) {
 		return (s[k] !== undefined && s[k] > 0) ? s[k] : d;
 	}
 	
@@ -82,13 +81,14 @@ function Plasma(window, canvas, settings) {
 		var scaleDivDef = 20;
 		
 		// init settings
-		colorMinVal = getSetting(s, 'colorMinVal', colorMinValDef);
-		colorMaxVal = getSetting(s, 'colorMaxVal', colorMaxValDef);
+		colorMinVal = getPositiveSetting(s, 'colorMinVal', colorMinValDef);
+		colorMaxVal = getPositiveSetting(s, 'colorMaxVal', colorMaxValDef);
 		colorHalfVal = Math.floor((colorMinVal + colorMaxVal) / 2);
-		speedMinDiv = getSetting(s, 'speedMinDiv', speedMinDivDef);
-		speedMaxDiv = getSetting(s, 'speedMaxDiv', speedMaxDivDef);
-		timeDiv = getSetting(s, 'timeDiv', timeDivDef);
-		scaleDiv = getSetting(s, 'scaleDiv', scaleDivDef); 
+		speedMinDiv = getPositiveSetting(s, 'speedMinDiv', speedMinDivDef);
+		speedMaxDiv = getPositiveSetting(s, 'speedMaxDiv', speedMaxDivDef);
+		timeDiv = getPositiveSetting(s, 'timeDiv', timeDivDef);
+		scaleDiv = getPositiveSetting(s, 'scaleDiv', scaleDivDef);
+		started = s.started !== undefined ? s.started : false;
 	}
 	
 	// init objects dimensions and scaling
@@ -102,11 +102,11 @@ function Plasma(window, canvas, settings) {
 		// init source canvas objects
 		srcCanvas.width = width;
 		srcCanvas.height = height;
-		srcImage = srcContent.getImageData(0, 0, srcCanvas.width, srcCanvas.height);
+		srcImage = srcContext.getImageData(0, 0, srcCanvas.width, srcCanvas.height);
 		srcData = srcImage.data;
 		
 		// scale destination canvas content to paint it from source canvas content
-		dstContent.scale(dstCanvas.width / width, dstCanvas.height / height);
+		dstContext.scale(dstCanvas.width / width, dstCanvas.height / height);
 	}
 	
 	// init start attractors and repulsors coordinates
@@ -174,17 +174,15 @@ function Plasma(window, canvas, settings) {
 		// handle all position cases
         if (c + r >= 0 && c + r < d)
             return c + r;
-        else if (c + r > d)
+        if (c + r > d)
 			return (c + r > 2 * d) ?
 				(c + r - 2 * d) :
 				(d - (c + r - d));
-        else
-			return (c + r < -1 * d) ?
+        return (c + r < -1 * d) ?
 				(d - (-1 * (c + r) - d)) :
 				(-1 * (c + r));
-
-        return result;
-    };
+    }
+	
 	
 	// draw plasma effect on source canvas using
 	// current time and move it to destination one
@@ -233,10 +231,10 @@ function Plasma(window, canvas, settings) {
         }
 
 		// draw calculated data on source canvas
-        srcContent.putImageData(srcImage, 0, 0);
+        srcContext.putImageData(srcImage, 0, 0);
 
 		// move source canvas drawing to destination one
-		dstContent.drawImage(srcCanvas, 0, 0);
+		dstContext.drawImage(srcCanvas, 0, 0);
 		
 		// handle stop condition
 		if (started) {
@@ -259,7 +257,7 @@ function Plasma(window, canvas, settings) {
 	
 	
 	validate(window, canvas);
-	
+			
 	// init
 	initCanvas(window, canvas);
 	initSettings(settings || {});
@@ -267,7 +265,6 @@ function Plasma(window, canvas, settings) {
 	initCoordinates();
 	initSpeeds();
 	
-	if (settings.started) {
+	if (started) 
 		this.start();
-	}
 }

@@ -1,4 +1,5 @@
-window.onload = function() {
+(function() {
+	window.onload = function() {
 
 		// set source canvas logical dimensions to fullscreen size
 		var canvas = document.getElementById('canvas');
@@ -25,4 +26,5 @@ window.onload = function() {
 			// ...except some awful cases
 			window.alert(ex.toString());
 		}
-};
+	}
+})();

@@ -10,17 +10,14 @@ SET root=%~dp0..
 
 :: projects
 SET scrgen=ScrGen
-SET sample=sample
+SET build=Build
+SET examples=Examples
 
 :: paths
 SET scrgen_exe="%root%\Binaries\%scrgen%.exe"
-SET build_scrgen="%root%\Build\build_scrgen.bat"
-SET build_scr="%root%\Build\build_screensaver.bat"
-SET con="%root%\Build\%sample%"
-SET cap="%root%\Build\%sample%\caption.txt"
-SET ico="%root%\Build\%sample%\icon.ico"
-SET scr_out="%root%\Build\SAMPLE.SCR"
-
+SET build_scrgen="%root%\%build%\build_scrgen.bat"
+SET build_scr="%root%\%build%\build_screensaver.bat"
+SET examples_dir="%root%\%build%\%examples%"
 
 :: start build
 
@@ -28,16 +25,14 @@ SET scr_out="%root%\Build\SAMPLE.SCR"
 SET ERROR=0
 CALL:checkexist %build_scrgen%
 CALL:checkexist %build_scr%
-CALL:checkexist %con%
-CALL:checkexist %cap% 
-CALL:checkexist %ico%
+CALL:checkexist %examples_dir%
 IF %ERROR% NEQ 0 EXIT /B
 
 :: build scrgen if not exist
 IF NOT EXIST %scrgen_exe% CALL %build_scrgen%
 
 :: exec scrgen
-CALL %build_scr% %con% %cap% %ico% %scr_out%
+FOR /F %%D IN ('DIR %examples_dir% /A:D /B') DO CALL %build_scr% "%root%\%build%\%examples%\%%D" "%root%\%build%\%examples%\%%D.SCR"
 IF %ERRORLEVEL% NEQ 0 EXIT /B
 
 :: end build

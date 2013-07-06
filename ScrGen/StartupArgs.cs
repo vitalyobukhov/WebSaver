@@ -59,7 +59,7 @@ namespace ScrGen
         {
             try
             {
-                OutputPath = Path.GetFileNameWithoutExtension(arg) + Constants.OutputExtension;
+                OutputPath = arg.Substring(0, arg.Length - Path.GetExtension(arg).Length) + Constants.OutputExtension;
                 return true;
             }
             catch

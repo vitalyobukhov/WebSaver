@@ -34,18 +34,18 @@ IF %argc%==1 (
 )
 IF %argc%==2 (
 	SET src=%1
-	SET out="%~n2.scr"
+	SET out="%~d2%~p2%~n2.scr"
 ) 
 IF %argc%==3 (
 	SET src=%1
 	SET cap=%2
-	SET out="%~n3.scr"
+	SET out="%~d3%~p3%~n3.scr"
 ) 
 IF %argc%==4 (
 	SET src=%1
 	SET cap=%2
 	SET ico=%3
-	SET out="%~n4.scr"
+	SET out="%~d4%~p4%~n4.scr"
 )
 
 :: start build
@@ -77,7 +77,7 @@ GOTO:EOF
 
 
 :trimext
-	IF NOT [%~n1.scr]==[%~1] SET out="%~n1.scr"
+	IF NOT [%~n1.scr]==[%~1] SET out="%~d1%~p1%~n1.scr"
 GOTO:EOF
 
 :: delete file if exists
