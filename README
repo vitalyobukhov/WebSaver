@@ -15,7 +15,10 @@ Before start
 FAQ
 
 	Q: Example, please!
-	A: "Build" directory -> Launch "build_screensaver.bat" -> No errors -> Launch "sample.scr".
+	A: "Build" directory -> Launch "build_sample.bat" -> No errors -> Launch "sample.scr".
+	
+	Q: Gimme moar!
+	A: "Build" directory -> Launch "build_examples.bat" -> No errors -> Check "Examples" directory for .scr files.
 	
 	Q: How to create screensaver from scratch?
 	A: Prepare your screensaver source files directory. Top level "index.html" file is mandatory. It could also include related web content (javascript, css, images), user-friendly screensaver caption ("caption.txt") and icon ("icon.ico"). Then open command prompt -> cd to "Build" directory -> build_screensaver.bat screensaver_source_directory output_screensaver_filename. Or just drag & drop your directory to "build_screensaver.bat" and enter output screensaver file path.
