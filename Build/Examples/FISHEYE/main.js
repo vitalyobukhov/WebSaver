@@ -1,20 +1,15 @@
 (function() {
-
 	window.onload = function() {
-		var canvas = document.getElementById('checkers');
+		var canvas = document.getElementById('canvas');
 		canvas.width = canvas.parentNode.clientWidth;
 		canvas.height = canvas.parentNode.clientHeight;
 
 		var settings = { 
-			firstColor: 'black',
-			secondColor: 'white',
-			minCount: 16,
 			draw: true
 		};
 		
 		try {
 			var checkers = new Checkers(canvas, settings);
-			checkers.draw();
 		}
 		catch(ex) {
 			window.alert(ex.toString());
@@ -25,11 +20,8 @@
 			ratioA: -0.25,
 			ratioB: -0.5,
 			ratioC: -2,
-			sizeDiv: 4,
-			speedMinDiv: 50,
-			speedMaxDiv: 100,
-			timeDiv: 100,
-			scaleDiv: 1,
+			speedMin: 1,
+			speedMax: 2.5,
 			started: true
 		};
 		
@@ -38,7 +30,6 @@
 		}
 		catch(ex) {
 			window.alert(ex.toString());
-			return;
 		}
 	};
 })();

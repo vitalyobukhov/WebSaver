@@ -21,6 +21,7 @@ SET resupd=ResUpd
 SET scr=Scr
 SET scrgen=ScrGen
 SET build=Build
+SET examples=Examples
 SET bin=Binaries
 
 :: paths
@@ -31,6 +32,7 @@ SET scr_obj="%root%\%scr%\obj"
 SET scrgen_bin="%root%\%scrgen%\bin"
 SET scrgen_obj="%root%\%scrgen%\obj"
 SET build_scr="%root%\%build%\*.scr"
+SET examples_scr="%root%\%build%\%examples%\*.scr"
 SET bin_exe="%root%\%bin%\*.exe"
 
 
@@ -53,6 +55,9 @@ CALL:tryrmdir %scrgen_obj%
 
 @ECHO Cleaning %build%...
 CALL:trydel %build_scr%
+
+@ECHO Cleaning %examples%...
+CALL:trydel %examples_scr%
 
 @ECHO Cleaning %bin%...
 CALL:trydel %bin_exe%

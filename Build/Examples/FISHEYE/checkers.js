@@ -1,26 +1,21 @@
 function Checkers(canvas, settings) {
 	
-	// canvas objects
 	var canvas, context, width, height;
-	
-	// settings
+
 	var firstColor, secondColor, minCount, draw;
 	
 	
-	// validate passed data
-	function validate(c) {
-
-		if (!c)
+	function validate(cnv) {
+		if (!cnv)
 			throw 'Canvas element was not found';
 			
-		if (!c.getContext('2d'))
+		if (!cnv.getContext('2d'))
 			throw 'Canvas 2D is not supported by browser';
 	}
 	
-	// init canvas objects
-	function initCanvas(c) {
-		canvas = c;
-		context = c.getContext('2d');
+	function initCanvas(cnv) {
+		canvas = cnv;
+		context = canvas.getContext('2d');
 		
 		width = canvas.width;
 		height = canvas.height;
@@ -30,28 +25,19 @@ function Checkers(canvas, settings) {
 		return 	/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(val);
 	}
 	
-	function isPositive(val) {
-		return val > 0;
-	}
-	
-	function initSettings(s) {
-		
-		// defaults
+	function initSettings(settings) {
 		var firstColorDef = 'black';
 		var secondColorDef = 'white';
-		var minCountDef = 10;
+		var minCountDef = 16;
 		
-		// init settings
-		firstColor = isColor(s.firstColor) ? s.firstColor : firstColorDef;
-		secondColor = isColor(s.secondColor) ? s.secondColor : secondColorDef;
-		minCount = isPositive(s.minCount) ? s.minCount : minCountDef;
-		draw = s.draw !== undefined ? s.draw : false;
+		firstColor = isColor(settings.firstColor) ? settings.firstColor : firstColorDef;
+		secondColor = isColor(settings.secondColor) ? settings.secondColor : secondColorDef;
+		minCount = settings.minCount > 0 ? settings.minCount : minCountDef;
+		draw = settings.draw !== undefined ? settings.draw : false;
 	}
 	
 
-	// draw checkers
 	this.draw = function() {
-		
 		var step = Math.min(width, height) / minCount;
 		var w = width / step, wf = Math.floor(w);
 		var h = height / step, hf = Math.floor(h);
@@ -69,7 +55,6 @@ function Checkers(canvas, settings) {
 	
 	validate(canvas);
 	
-	//init
 	initCanvas(canvas);
 	initSettings(settings || {});
 	

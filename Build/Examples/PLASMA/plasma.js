@@ -7,250 +7,199 @@
 
 function Plasma(window, canvas, settings) {
 	
-	// rendering state flag
+	var speedDiv = 10000;
+	
 	var started = false;
 	
-	// canvas, content, image and data objects
-	var srcCanvas, srcContext, srcImage, srcData;
+	var inrCanvas, inrContext, inrImage, inrData;
 	var dstCanvas, dstContext;
 
-	// color intervals
 	var colorMinVal, colorHalfVal, colorMaxVal;
-	
-	// animation dividers
-	var minSpeedDiv, maxSpeedDiv, timeDiv, scaleDiv;
-	
-	// dimensions
-	var width, height, diag;
+	var speedMin, speedMax, scaleDiv;
+	var inrWidth, inrHeight, inrDiag;
 
-	// attractors and repulsors initial coordinates
 	var rcx1, rcy1, gcx1, gcy1, bcx1, bcy1;
 	var rcx2, rcy2, gcx2, gcy2, bcx2, bcy2;
-	
-	// attractors and repulsors initial speeds
 	var rsx1, rsy1, gsx1, gsy1, bsx1, bsy1;
 	var rsx2, rsy2, gsx2, gsy2, bsx2, bsy2;
 	
 	
-	// validate passed params
-	function validate(w, c) {
-		
-		if (w === undefined) 
+	function validate(wnd, cnv) {
+		if (wnd === undefined) 
 			throw 'Window object was not provided';
 		
-		w.requestAnimationFrame = w.requestAnimationFrame || 
-			w.mozRequestAnimationFrame ||
-			w.webkitRequestAnimationFrame || 
-			w.msRequestAnimationFrame;
+		wnd.requestAnimationFrame = wnd.requestAnimationFrame || 
+			wnd.mozRequestAnimationFrame ||
+			wnd.webkitRequestAnimationFrame || 
+			wnd.msRequestAnimationFrame;
 		
-		if (!w.requestAnimationFrame) 
+		if (!wnd.requestAnimationFrame) 
 			throw 'RequestAnimationFrame is not supported by browser';
 		
-		if (!c)
+		if (!cnv)
 			throw 'Canvas element was not found';
 			
-		if (!c.getContext('2d'))
+		if (!cnv.getContext('2d'))
 			throw 'Canvas 2D is not supported by browser';
 	}
 
-	// init source and destination canvases
-	function initCanvas(w, c) {
-	
-		// invisible small drawing canvas element
-		srcCanvas = w.document.createElement('canvas');
-		srcContext = srcCanvas.getContext('2d');
+	function initCanvas(wnd, cnv) {
+		inrCanvas = wnd.document.createElement('canvas');
+		inrContext = inrCanvas.getContext('2d');
 		
-		// provided large visible canvas element
-		dstCanvas = c;
+		dstCanvas = cnv;
 		dstContext = dstCanvas.getContext('2d');
 	}
 	
-	// get settings value by key and default
-	function getPositiveSetting(s, k, d) {
-		return (s[k] !== undefined && s[k] > 0) ? s[k] : d;
+	function getSetting(set, key, def) {
+		return (set[key] !== undefined && set[key] > 0) ? set[key] : def;
 	}
 	
-	function initSettings(s) {
-	
-		// default values for settings
+	function initSettings(settings) {
 		var colorMinValDef = 0;
 		var colorMaxValDef = 255;
-		var speedMinDivDef = 40;
-		var speedMaxDivDef = 20;
-		var timeDivDef = 100;
-		var scaleDivDef = 20;
 		
-		// init settings
-		colorMinVal = getPositiveSetting(s, 'colorMinVal', colorMinValDef);
-		colorMaxVal = getPositiveSetting(s, 'colorMaxVal', colorMaxValDef);
+		var speedMinDef = 2;
+		var speedMaxDef = 1;
+		var scaleDivDef = 10;
+		
+		colorMinVal = getSetting(settings, 'colorMinVal', colorMinValDef);
+		colorMaxVal = getSetting(settings, 'colorMaxVal', colorMaxValDef);
 		colorHalfVal = Math.floor((colorMinVal + colorMaxVal) / 2);
-		speedMinDiv = getPositiveSetting(s, 'speedMinDiv', speedMinDivDef);
-		speedMaxDiv = getPositiveSetting(s, 'speedMaxDiv', speedMaxDivDef);
-		timeDiv = getPositiveSetting(s, 'timeDiv', timeDivDef);
-		scaleDiv = getPositiveSetting(s, 'scaleDiv', scaleDivDef);
-		started = s.started !== undefined ? s.started : false;
+		
+		speedMin = getSetting(settings, 'speedMin', speedMinDef);
+		speedMax = getSetting(settings, 'speedMax', speedMaxDef);
+		scaleDiv = getSetting(settings, 'scaleDiv', scaleDivDef);
+		
+		started = settings.started !== undefined ? settings.started : false;
 	}
 	
-	// init objects dimensions and scaling
 	function initDimensions() {
-	
-		// init dimensions
-		width = Math.round(dstCanvas.width / scaleDiv);
-		height = Math.round(dstCanvas.height / scaleDiv);
-		diag = Math.sqrt(width * width + height * height);
+		inrWidth = Math.round(dstCanvas.width / scaleDiv);
+		inrHeight = Math.round(dstCanvas.height / scaleDiv);
+		inrDiag = Math.sqrt(inrWidth * inrWidth + inrHeight * inrHeight);
 		
-		// init source canvas objects
-		srcCanvas.width = width;
-		srcCanvas.height = height;
-		srcImage = srcContext.getImageData(0, 0, srcCanvas.width, srcCanvas.height);
-		srcData = srcImage.data;
+		inrCanvas.width = inrWidth;
+		inrCanvas.height = inrHeight;
+		inrImage = inrContext.getImageData(0, 0, inrCanvas.width, inrCanvas.height);
+		inrData = inrImage.data;
 		
-		// scale destination canvas content to paint it from source canvas content
-		dstContext.scale(dstCanvas.width / width, dstCanvas.height / height);
+		dstContext.scale(dstCanvas.width / inrWidth, dstCanvas.height / inrHeight);
 	}
 	
-	// init start attractors and repulsors coordinates
 	function initCoordinates() {
-	
-		// attractors
-		rcx1 = Math.random() * width;
-		rcy1 = Math.random() * height;
-		gcx1 = Math.random() * width;
-		gcy1 = Math.random() * height;
-		bcx1 = Math.random() * width;
-		bcy1 = Math.random() * height;
+		rcx1 = Math.random() * inrWidth;
+		rcy1 = Math.random() * inrHeight;
+		gcx1 = Math.random() * inrWidth;
+		gcy1 = Math.random() * inrHeight;
+		bcx1 = Math.random() * inrWidth;
+		bcy1 = Math.random() * inrHeight;
 
-		// repulsors
-		rcx2 = Math.random() * width;
-		rcy2 = Math.random() * height;
-		gcx2 = Math.random() * width;
-		gcy2 = Math.random() * height;
-		bcx2 = Math.random() * width;
-		bcy2 = Math.random() * height;
+		rcx2 = Math.random() * inrWidth;
+		rcy2 = Math.random() * inrHeight;
+		gcx2 = Math.random() * inrWidth;
+		gcy2 = Math.random() * inrHeight;
+		bcx2 = Math.random() * inrWidth;
+		bcy2 = Math.random() * inrHeight;
 	}
 	
-	// init start attractors and repulsors speeds
+	function getSpeed(sa, sb) {
+		return (Math.random() < 0.5 ? -1 : 1) * (sa + Math.random() * (sb - sa));
+	}
+	
 	function initSpeeds() {
-	
-		// multipliers
-		var sxb = width / speedMinDiv;
-		var sxa = width / speedMaxDiv;
-		var syb = height / speedMinDiv;
-		var sya = height / speedMaxDiv;
+		var sxa = inrWidth * speedMin / speedDiv;
+		var sxb = inrWidth * speedMax / speedDiv;
+		var sya = inrHeight * speedMin / speedDiv;
+		var syb = inrHeight * speedMax / speedDiv;
 		
-		// attractors
-		rsx1 = sxb + Math.random() * sxa;
-		rsy1 = syb + Math.random() * sya;
-		gsx1 = sxb + Math.random() * sxa;
-		gsy1 = syb + Math.random() * sya;
-		bsx1 = sxb + Math.random() * sxa;
-		bsy1 = syb + Math.random() * sya;
+		rsx1 = getSpeed(sxa, sxb);
+		rsy1 = getSpeed(sya, syb);
+		gsx1 = getSpeed(sxa, sxb);
+		gsy1 = getSpeed(sya, syb);
+		bsx1 = getSpeed(sxa, sxb);
+		bsy1 = getSpeed(sya, syb);
 		
-		// repulsors
-		rsx2 = sxb + Math.random() * sxa;
-		rsy2 = syb + Math.random() * sya;
-		gsx2 = sxb + Math.random() * sxa;
-		gsy2 = syb + Math.random() * sya;
-		bsx2 = sxb + Math.random() * sxa;
-		bsy2 = syb + Math.random() * sya;
+		rsx2 = getSpeed(sxa, sxb);
+		rsy2 = getSpeed(sya, syb);
+		gsx2 = getSpeed(sxa, sxb);
+		gsy2 = getSpeed(sya, syb);
+		bsx2 = getSpeed(sxa, sxb);
+		bsy2 = getSpeed(sya, syb);
 	}
 	
-	// get color component weight value
-	function getColorWeight(cx, cy, tx, ty) {
-	
-		// deltas
-        var dx = cx - tx;
-        var dy = cy - ty;
+	function getColorWeight(nx, ny, x, y) {
+        var dx = nx - x;
+        var dy = ny - y;
 		
-		// calc measure
-        return 1 - Math.sqrt(dx * dx + dy * dy) / diag;
+        return 1 - Math.sqrt(dx * dx + dy * dy) / inrDiag;
     }
 	
-	// get new attractor or repulsor coordinate 
-	// from current one, speed, size and time
-	function getNewCoordinate(c, s, d, t) {
-        var r = (s * t) % (2 * d);
+	function getNewCoordinate(coord, speed, border, time) {
+        var off = (speed * time) % (2 * border);
+		var pos = coord + off;
 		
-		// handle all position cases
-        if (c + r >= 0 && c + r < d)
-            return c + r;
-        if (c + r > d)
-			return (c + r > 2 * d) ?
-				(c + r - 2 * d) :
-				(d - (c + r - d));
-        return (c + r < -1 * d) ?
-				(d - (-1 * (c + r) - d)) :
-				(-1 * (c + r));
+        if (pos >= 0 && pos < border)
+            return pos;
+        if (pos > border)
+			return (pos > 2 * border) ?
+				(pos - 2 * border) :
+				(border - (pos - border));
+        return (pos < -border) ?
+				(border - (-pos - border)) :
+				-pos;
     }
 	
 	
-	// draw plasma effect on source canvas using
-	// current time and move it to destination one
 	this.draw = function (time) {
-	
-        var t = time / timeDiv;
+		var rcx1n = getNewCoordinate(rcx1, rsx1, inrWidth, time);
+		var rcy1n = getNewCoordinate(rcy1, rsy1, inrHeight, time);
+		var gcx1n = getNewCoordinate(gcx1, gsx1, inrWidth, time);
+		var gcy1n = getNewCoordinate(gcy1, gsy1, inrHeight, time);
+		var bcx1n = getNewCoordinate(bcx1, bsx1, inrWidth, time);
+		var bcy1n = getNewCoordinate(bcy1, bsy1, inrHeight, time);
 		
-		// calc new attractors coordinates
-		var rcx1n = getNewCoordinate(rcx1, rsx1, width, t);
-		var rcy1n = getNewCoordinate(rcy1, rsy1, height, t);
-		var gcx1n = getNewCoordinate(gcx1, gsx1, width, t);
-		var gcy1n = getNewCoordinate(gcy1, gsy1, height, t);
-		var bcx1n = getNewCoordinate(bcx1, bsx1, width, t);
-		var bcy1n = getNewCoordinate(bcy1, bsy1, height, t);
+		var rcx2n = getNewCoordinate(rcx2, rsx2, inrWidth, time);
+		var rcy2n = getNewCoordinate(rcy2, rsy2, inrHeight, time);
+		var gcx2n = getNewCoordinate(gcx2, gsx2, inrWidth, time);
+		var gcy2n = getNewCoordinate(gcy2, gsy2, inrHeight, time);
+		var bcx2n = getNewCoordinate(bcx2, bsx2, inrWidth, time);
+		var bcy2n = getNewCoordinate(bcy2, bsy2, inrHeight, time);
 		
-		// calc new repulsors coordinates
-		var rcx2n = getNewCoordinate(rcx2, rsx2, width, t);
-		var rcy2n = getNewCoordinate(rcy2, rsy2, height, t);
-		var gcx2n = getNewCoordinate(gcx2, gsx2, width, t);
-		var gcy2n = getNewCoordinate(gcy2, gsy2, height, t);
-		var bcx2n = getNewCoordinate(bcx2, bsx2, width, t);
-		var bcy2n = getNewCoordinate(bcy2, bsy2, height, t);
-		
-        var rn, gn, bn, o;
-		
-        for(var x = 0; x < width; x++) {
-            for(var y = 0; y < height; y++) {
+        for(var x = 0; x < inrWidth; x++) {
+            for(var y = 0; y < inrHeight; y++) {
+                var rn = colorHalfVal + colorMaxVal * (getColorWeight(rcx1n, rcy1n, x, y) - getColorWeight(rcx2n, rcy2n, x, y));
+                var gn = colorHalfVal + colorMaxVal * (getColorWeight(gcx1n, gcy1n, x, y) - getColorWeight(gcx2n, gcy2n, x, y));
+                var bn = colorHalfVal + colorMaxVal * (getColorWeight(bcx1n, bcy1n, x, y) - getColorWeight(bcx2n, bcy2n, x, y));
 
-				// calc new point color components
-                rn = colorHalfVal + colorMaxVal * (getColorWeight(rcx1n, rcy1n, x, y) - getColorWeight(rcx2n, rcy2n, x, y));
-                gn = colorHalfVal + colorMaxVal * (getColorWeight(gcx1n, gcy1n, x, y) - getColorWeight(gcx2n, gcy2n, x, y));
-                bn = colorHalfVal + colorMaxVal * (getColorWeight(bcx1n, bcy1n, x, y) - getColorWeight(bcx2n, bcy2n, x, y));
-
-				// handle boundaries
                 rn = rn > colorMaxVal ? colorMaxVal : (rn < colorMinVal ? colorMinVal : rn);
                 gn = gn > colorMaxVal ? colorMaxVal : (gn < colorMinVal ? colorMinVal : gn);
                 bn = bn > colorMaxVal ? colorMaxVal : (bn < colorMinVal ? colorMinVal : bn);
 
-				// set canvas context image data
-				o = (y * width + x) * 4;
-                srcData[o + 0] = rn;
-				srcData[o + 1] = gn;
-				srcData[o + 2] = bn;
-				srcData[o + 3] = 255;
+				var o = (y * inrWidth + x) * 4;
+                inrData[o + 0] = rn;
+				inrData[o + 1] = gn;
+				inrData[o + 2] = bn;
+				inrData[o + 3] = 255;
             }
         }
 
-		// draw calculated data on source canvas
-        srcContext.putImageData(srcImage, 0, 0);
+        inrContext.putImageData(inrImage, 0, 0);
 
-		// move source canvas drawing to destination one
-		dstContext.drawImage(srcCanvas, 0, 0);
+		dstContext.drawImage(inrCanvas, 0, 0);
 		
-		// handle stop condition
 		if (started) {
 			var that = this;
 			requestAnimationFrame(function() { that.draw(Date.now()); });
 		}
     };
 	
-	// start draw animation on canvas
 	this.start = function() {
 		started = true;
 		var that = this;
 		requestAnimationFrame(function() { that.draw(Date.now()); });
 	};
 	
-	// stop draw animation on canvas
 	this.stop = function() {
 		started = false;
 	};
@@ -258,7 +207,6 @@ function Plasma(window, canvas, settings) {
 	
 	validate(window, canvas);
 			
-	// init
 	initCanvas(window, canvas);
 	initSettings(settings || {});
 	initDimensions();
