@@ -1,4 +1,4 @@
-:: sample screensaver build script
+:: examples build script
 
 
 @ECHO OFF

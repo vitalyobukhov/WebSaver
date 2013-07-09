@@ -1,6 +1,6 @@
 (function() {
 	window.onload = function() {
-		var canvas = document.getElementById('bars');
+		var canvas = document.getElementById('canvas');
 		canvas.width = canvas.parentNode.clientWidth;
 		canvas.height = canvas.parentNode.clientHeight;
 
@@ -10,11 +10,11 @@
 			started: true
 		};
 		
-		//try {
+		try {
 			var bars = new Bars(window, canvas, settings); 
-		//}
-		//catch(ex) {
-		//	window.alert(ex.toString());
-		//}
+		}
+		catch(ex) {
+			window.alert(ex.toString());
+		}
 	};
 })();
