@@ -6,10 +6,10 @@ namespace ScrGen.Icon
 {
     // ICONDIR and ICONIMAGES container reader / writer
     // http://msdn.microsoft.com/en-us/library/ms997538.aspx
-    sealed class ICOContainer : IconContainer
+    sealed class IcoContainer : IconContainer
     {
         // related directory
-        public ICODirectory Directory { get; set; }
+        public IcoDirectory Directory { get; set; }
 
         public override int Size
         {
@@ -25,7 +25,7 @@ namespace ScrGen.Icon
 
         private void Parse(Stream icoStream)
         {
-            Directory = new ICODirectory(icoStream);
+            Directory = new IcoDirectory(icoStream);
 
             Images = new IconImage[Directory.Entries.Length];
 
@@ -35,7 +35,7 @@ namespace ScrGen.Icon
                     (int)Directory.Entries[i].BytesInRes);
         }
 
-        public ICOContainer(Stream icoStream)
+        public IcoContainer(Stream icoStream)
         {
             if (icoStream == null)
                 throw new ArgumentNullException("icoStream");
@@ -43,7 +43,7 @@ namespace ScrGen.Icon
             Parse(icoStream);
         }
 
-        public ICOContainer(byte[] icoBytes)
+        public IcoContainer(byte[] icoBytes)
         {
             if (icoBytes == null)
                 throw new ArgumentNullException("icoBytes");
@@ -52,7 +52,7 @@ namespace ScrGen.Icon
                 Parse(icoStream);
         }
 
-        public ICOContainer(string icoFilename)
+        public IcoContainer(string icoFilename)
         {
             if (string.IsNullOrWhiteSpace(icoFilename))
                 throw new ArgumentNullException("icoFilename");
@@ -70,18 +70,18 @@ namespace ScrGen.Icon
                 Parse(icoStream);
         }
 
-        public ICOContainer(ICOContainer container) :
+        public IcoContainer(IcoContainer container) :
             base(container)
         {
             if (container.Directory == null)
                 throw new InvalidOperationException("Container Directory is null");
 
-            Directory = new ICODirectory(container.Directory);
+            Directory = new IcoDirectory(container.Directory);
         }
 
-        public ICOContainer()
+        public IcoContainer()
         {
-            Directory = new ICODirectory();
+            Directory = new IcoDirectory();
         }
 
 
@@ -98,10 +98,10 @@ namespace ScrGen.Icon
         }
 
         // returns ordered by offset entry / image pairs
-        private Tuple<ICODirectoryEntry, IconImage>[] GetEntryImageOrderedPairs()
+        private Tuple<IcoDirectoryEntry, IconImage>[] GetEntryImageOrderedPairs()
         {
             return Directory.Entries.
-                Select((e, i) => new Tuple<ICODirectoryEntry, IconImage>(e, Images[i])).
+                Select((e, i) => new Tuple<IcoDirectoryEntry, IconImage>(e, Images[i])).
                 OrderBy(t => t.Item1.ImageOffset).ToArray();
         }
 

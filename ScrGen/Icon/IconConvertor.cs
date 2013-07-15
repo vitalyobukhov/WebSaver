@@ -6,23 +6,24 @@ namespace ScrGen.Icon
     // icon classes conversion extensions
     static class IconConvertor
     {
-        public static PEDirectoryEntry ToPE(this ICODirectoryEntry entry)
+        public static PeDirectoryEntry ToPe(this IcoDirectoryEntry entry)
         {
             if (entry == null)
                 throw new ArgumentNullException("entry");
 
-            return new PEDirectoryEntry(entry);
+            return new PeDirectoryEntry(entry);
         }
 
-        public static ICODirectoryEntry ToICO(this PEDirectoryEntry entry)
+        public static IcoDirectoryEntry ToIco(this PeDirectoryEntry entry)
         {
             if (entry == null)
                 throw new ArgumentNullException("entry");
 
-            return new ICODirectoryEntry(entry);
+            return new IcoDirectoryEntry(entry);
         }
 
-        public static PEDirectory ToPE(this ICODirectory directory)
+
+        public static PeDirectory ToPe(this IcoDirectory directory)
         {
             if (directory == null)
                 throw new ArgumentNullException("directory");
@@ -30,17 +31,13 @@ namespace ScrGen.Icon
             if (directory.Entries == null || directory.Entries.Any(e => e == null))
                 throw new InvalidOperationException("Directory Entries are null");
 
-            var result = new PEDirectory(directory);
-
-            result.Entries = new PEDirectoryEntry[directory.Entries.Length];
-
-            for (var i = 0; i < directory.Entries.Length; i++)
-                result.Entries[i] = directory.Entries[i].ToPE();
-
-            return result;
+            return new PeDirectory(directory)
+            {
+                Entries = directory.Entries.Select(e => e.ToPe()).ToArray()
+            };
         }
 
-        public static ICODirectory ToICO(this PEDirectory directory)
+        public static IcoDirectory ToIco(this PeDirectory directory)
         {
             if (directory == null)
                 throw new ArgumentNullException("directory");
@@ -48,17 +45,14 @@ namespace ScrGen.Icon
             if (directory.Entries == null || directory.Entries.Any(e => e == null))
                 throw new InvalidOperationException("Directory Entries are null");
 
-            var result = new ICODirectory(directory);
-
-            result.Entries = new ICODirectoryEntry[directory.Entries.Length];
-
-            for (var i = 0; i < directory.Entries.Length; i++)
-                result.Entries[i] = directory.Entries[i].ToICO();
-
-            return result;
+            return new IcoDirectory(directory)
+            {
+                Entries = directory.Entries.Select(e => e.ToIco()).ToArray()
+            };
         }
 
-        public static PEContainer ToPE(this ICOContainer container)
+
+        public static PeContainer ToPe(this IcoContainer container)
         {
             if (container == null)
                 throw new ArgumentNullException("container");
@@ -69,14 +63,14 @@ namespace ScrGen.Icon
             if (container.Images == null)
                 throw new InvalidOperationException("Container Images are null");
 
-            return new PEContainer
+            return new PeContainer
             {
-                Directory = container.Directory.ToPE(),
+                Directory = container.Directory.ToPe(),
                 Images = container.Images.Select(i => new IconImage(i)).ToArray()
             };
         }
 
-        public static ICOContainer ToICO(this PEContainer container)
+        public static IcoContainer ToIco(this PeContainer container)
         {
             if (container == null)
                 throw new ArgumentNullException("container");
@@ -87,9 +81,9 @@ namespace ScrGen.Icon
             if (container.Images == null)
                 throw new InvalidOperationException("Container Images are null");
 
-            return new ICOContainer
+            return new IcoContainer
             {
-                Directory = container.Directory.ToICO(),
+                Directory = container.Directory.ToIco(),
                 Images = container.Images.Select(i => new IconImage(i)).ToArray()
             };
         }

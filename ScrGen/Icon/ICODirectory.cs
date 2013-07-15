@@ -5,9 +5,9 @@ using System.Linq;
 namespace ScrGen.Icon
 {
     // ICONDIR reader / writer
-    sealed class ICODirectory : IconDirectory
+    sealed class IcoDirectory : IconDirectory
     {
-        public ICODirectoryEntry[] Entries { get; set; }
+        public IcoDirectoryEntry[] Entries { get; set; }
 
         public override int Size
         {
@@ -16,7 +16,7 @@ namespace ScrGen.Icon
                 if (Entries == null)
                     throw new InvalidOperationException("Entries are null");
 
-                return BaseSize + ICODirectoryEntry.Size * Entries.Length;
+                return BaseSize + IcoDirectoryEntry.Size * Entries.Length;
             }
         }
 
@@ -40,46 +40,46 @@ namespace ScrGen.Icon
 
         private void Parse(Stream icoStream)
         {
-            Entries = new ICODirectoryEntry[Count];
+            Entries = new IcoDirectoryEntry[Count];
 
             for (var i = 0; i < Count; i++)
-                Entries[i] = new ICODirectoryEntry(icoStream);
+                Entries[i] = new IcoDirectoryEntry(icoStream);
 
             Validate();
         }
 
-        public ICODirectory(Stream icoStream) :
+        public IcoDirectory(Stream icoStream) :
             base(icoStream)
         {
-            if (icoStream.Length < icoStream.Position + ICODirectoryEntry.Size * Count)
+            if (icoStream.Length < icoStream.Position + IcoDirectoryEntry.Size * Count)
                 throw new ArgumentOutOfRangeException("Stream contains insufficient data", "icoStream");
 
             Parse(icoStream);
         }
 
-        public ICODirectory(byte[] icoBytes) :
+        public IcoDirectory(byte[] icoBytes) :
             base(icoBytes)
         {
-            if (icoBytes.Length < BaseSize + ICODirectoryEntry.Size * Count)
+            if (icoBytes.Length < BaseSize + IcoDirectoryEntry.Size * Count)
                 throw new ArgumentOutOfRangeException("Array contains insufficient data", "icoStream");
 
-            using (var icoStream = new MemoryStream(icoBytes, IconDirectory.BaseSize, ICODirectoryEntry.Size * Count))
+            using (var icoStream = new MemoryStream(icoBytes, BaseSize, IcoDirectoryEntry.Size * Count))
                 Parse(icoStream);
         }
 
-        public ICODirectory(ICODirectory directory) :
+        public IcoDirectory(IcoDirectory directory) :
             base(directory)
         {
-            Entries = directory.Entries.Select(e => new ICODirectoryEntry(e)).ToArray();
+            Entries = directory.Entries.Select(e => new IcoDirectoryEntry(e)).ToArray();
         }
 
-        public ICODirectory(IconDirectory directory) :
+        public IcoDirectory(IconDirectory directory) :
             base(directory)
         { }
 
-        public ICODirectory()
+        public IcoDirectory()
         {
-            Entries = new ICODirectoryEntry[0];
+            Entries = new IcoDirectoryEntry[0];
         }
 
 
@@ -101,8 +101,8 @@ namespace ScrGen.Icon
 
             base.ToStream(icoStream);
 
-            for (var i = 0; i < Entries.Length; i++)
-                Entries[i].ToStream(icoStream);
+            foreach (var e in Entries)
+                e.ToStream(icoStream);
         }
 
         public override byte[] ToBytes()

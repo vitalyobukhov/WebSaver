@@ -5,7 +5,7 @@ using System.Text;
 namespace ScrGen.Icon
 {
     // ICONDIRENTRY reander / writer
-    sealed class ICODirectoryEntry : IconDirectoryEntry
+    sealed class IcoDirectoryEntry : IconDirectoryEntry
     {
         // additional header size
         private const int additionalSize = sizeof(uint);
@@ -26,7 +26,7 @@ namespace ScrGen.Icon
             }
         }
 
-        public ICODirectoryEntry(Stream icoStream) :
+        public IcoDirectoryEntry(Stream icoStream) :
             base(icoStream)
         {
             if (icoStream.Length < icoStream.Position + additionalSize)
@@ -35,7 +35,7 @@ namespace ScrGen.Icon
             Parse(icoStream);
         }
 
-        public ICODirectoryEntry(byte[] icoBytes) :
+        public IcoDirectoryEntry(byte[] icoBytes) :
             base(icoBytes)
         {
             if (icoBytes.Length < Size)
@@ -45,17 +45,17 @@ namespace ScrGen.Icon
                 Parse(icoStream);
         }
 
-        public ICODirectoryEntry(ICODirectoryEntry entry) :
+        public IcoDirectoryEntry(IcoDirectoryEntry entry) :
             base(entry)
         {
             ImageOffset = entry.ImageOffset;
         }
 
-        public ICODirectoryEntry(IconDirectoryEntry entry) :
+        public IcoDirectoryEntry(IconDirectoryEntry entry) :
             base(entry)
         { }
 
-        public ICODirectoryEntry()
+        public IcoDirectoryEntry()
         { }
 
 

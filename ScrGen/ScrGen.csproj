@@ -63,17 +63,17 @@
       <Link>Common\StartupArgs.cs</Link>
     </Compile>
     <Compile Include="Common\Constants\Constants.Local.cs" />
-    <Compile Include="Icon\ICOContainer.cs" />
-    <Compile Include="Icon\ICODirectory.cs" />
-    <Compile Include="Icon\ICODirectoryEntry.cs" />
+    <Compile Include="Icon\IcoContainer.cs" />
+    <Compile Include="Icon\IcoDirectory.cs" />
+    <Compile Include="Icon\IcoDirectoryEntry.cs" />
     <Compile Include="Icon\IconContainer.cs" />
     <Compile Include="Icon\IconConvertor.cs" />
     <Compile Include="Icon\IconDirectory.cs" />
     <Compile Include="Icon\IconDirectoryEntry.cs" />
     <Compile Include="Icon\IconImage.cs" />
-    <Compile Include="Icon\PEContainer.cs" />
-    <Compile Include="Icon\PEDirectory.cs" />
-    <Compile Include="Icon\PEDirectoryEntry.cs" />
+    <Compile Include="Icon\PeContainer.cs" />
+    <Compile Include="Icon\PeDirectory.cs" />
+    <Compile Include="Icon\PeDirectoryEntry.cs" />
     <Compile Include="Localization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

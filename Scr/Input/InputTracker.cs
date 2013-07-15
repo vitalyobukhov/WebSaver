@@ -20,7 +20,8 @@ namespace Scr.Input
         private readonly Timer timer;
 
         // two input info instances to compare
-        private InputInfo initialInfo, actualInfo;
+        private readonly InputInfo initialInfo;
+        private InputInfo actualInfo;
 
 
         // state

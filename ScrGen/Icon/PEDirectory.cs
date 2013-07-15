@@ -5,9 +5,9 @@ using System.Linq;
 namespace ScrGen.Icon
 {
     // GRPICONDIRENTRIES
-    sealed class PEDirectory : IconDirectory
+    sealed class PeDirectory : IconDirectory
     {
-        public PEDirectoryEntry[] Entries { get; set; }
+        public PeDirectoryEntry[] Entries { get; set; }
 
         public override int Size
         {
@@ -16,7 +16,7 @@ namespace ScrGen.Icon
                 if (Entries == null)
                     throw new InvalidOperationException("Entries are null");
 
-                return BaseSize + PEDirectoryEntry.Size * Entries.Length;
+                return BaseSize + PeDirectoryEntry.Size * Entries.Length;
             }
         }
 
@@ -24,44 +24,44 @@ namespace ScrGen.Icon
 
         private void Parse(Stream peStream)
         {
-            Entries = new PEDirectoryEntry[Count];
+            Entries = new PeDirectoryEntry[Count];
 
             for (var i = 0; i < Count; i++)
-                Entries[i] = new PEDirectoryEntry(peStream);
+                Entries[i] = new PeDirectoryEntry(peStream);
         }
 
-        public PEDirectory(Stream peStream) :
+        public PeDirectory(Stream peStream) :
             base(peStream)
         {
-            if (peStream.Length < peStream.Position + PEDirectoryEntry.Size * Count)
+            if (peStream.Length < peStream.Position + PeDirectoryEntry.Size * Count)
                 throw new ArgumentOutOfRangeException("Stream contains insufficient data", "peStream");
 
             Parse(peStream);
         }
 
-        public PEDirectory(byte[] peBytes) :
+        public PeDirectory(byte[] peBytes) :
             base(peBytes)
         {
-            if (peBytes.Length < BaseSize + PEDirectoryEntry.Size * Count)
+            if (peBytes.Length < BaseSize + PeDirectoryEntry.Size * Count)
                 throw new ArgumentOutOfRangeException("Array contains insufficient data", "peBytes");
 
-            using (var peStream = new MemoryStream(peBytes, IconDirectory.BaseSize, PEDirectoryEntry.Size * Count))
+            using (var peStream = new MemoryStream(peBytes, BaseSize, PeDirectoryEntry.Size * Count))
                 Parse(peStream);
         }
 
-        public PEDirectory(PEDirectory directory) :
+        public PeDirectory(PeDirectory directory) :
             base(directory)
         {
-            Entries = directory.Entries.Select(e => new PEDirectoryEntry(e)).ToArray();
+            Entries = directory.Entries.Select(e => new PeDirectoryEntry(e)).ToArray();
         }
 
-        public PEDirectory(IconDirectory directory) :
+        public PeDirectory(IconDirectory directory) :
             base(directory)
         { }
 
-        public PEDirectory()
+        public PeDirectory()
         {
-            Entries = new PEDirectoryEntry[0];
+            Entries = new PeDirectoryEntry[0];
         }
 
 
@@ -75,8 +75,8 @@ namespace ScrGen.Icon
 
             base.ToStream(peStream);
 
-            for (var i = 0; i < Entries.Length; i++)
-                Entries[i].ToStream(peStream);
+            foreach (var e in Entries)
+                e.ToStream(peStream);
         }
 
         public override byte[] ToBytes()

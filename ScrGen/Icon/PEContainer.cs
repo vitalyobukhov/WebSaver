@@ -9,10 +9,10 @@ namespace ScrGen.Icon
 {
     // GRPICONDIR and ICONIMAGES container
     // http://msdn.microsoft.com/en-us/library/ms997538.aspx
-    sealed class PEContainer : IconContainer
+    sealed class PeContainer : IconContainer
     {
         // related directory
-        public PEDirectory Directory { get; set; }
+        public PeDirectory Directory { get; set; }
 
         public override int Size
         {
@@ -34,7 +34,7 @@ namespace ScrGen.Icon
                 throw new ArgumentException("File does not exist", "filename");
         }
 
-        public PEContainer(string filename, ushort groupIconName)
+        public PeContainer(string filename, ushort groupIconName)
         {
             ValidateFilename(filename);
 
@@ -50,7 +50,7 @@ namespace ScrGen.Icon
                     (ushort)PInvoke.ResourceType.GROUP_ICON, groupIconName);
 
                 // parse directory from data
-                Directory = new PEDirectory(groupIconBytes);
+                Directory = new PeDirectory(groupIconBytes);
 
                 Images = new IconImage[Directory.Entries.Length];
 
@@ -67,18 +67,18 @@ namespace ScrGen.Icon
             }
         }
 
-        public PEContainer(ICOContainer container) :
+        public PeContainer(IcoContainer container) :
             base(container)
         {
             if (container.Directory == null)
                 throw new InvalidOperationException("Container Directory is null");
 
-            Directory = new PEDirectory(container.Directory);
+            Directory = new PeDirectory(container.Directory);
         }
 
-        public PEContainer()
+        public PeContainer()
         {
-            Directory = new PEDirectory();
+            Directory = new PeDirectory();
         }
 
 
@@ -105,7 +105,7 @@ namespace ScrGen.Icon
         }
 
         // loads related directory from file
-        private PEDirectory GetOldDirectory(string filename, ushort groupIconName)
+        private PeDirectory GetOldDirectory(string filename, ushort groupIconName)
         {
             var datafile = LoadDatafile(filename);
 
@@ -118,7 +118,7 @@ namespace ScrGen.Icon
                 {
                     var oldDirectoryBytes = PInvoke.LoadResourceBytes(datafile,
                         (ushort)PInvoke.ResourceType.GROUP_ICON, groupIconName);
-                    return new PEDirectory(oldDirectoryBytes);
+                    return new PeDirectory(oldDirectoryBytes);
                 }
 
                 return null;
@@ -131,7 +131,7 @@ namespace ScrGen.Icon
             var datafile = LoadDatafile(filename);
 
             ushort[] busyNames;
-            PEDirectory oldDirectory = null;
+            PeDirectory oldDirectory = null;
             using (new PInvoke.DisposableHandle(datafile, PInvoke.FreeLibrary))
             {
                 busyNames = PInvoke.GetResourceNames(datafile,
@@ -144,7 +144,7 @@ namespace ScrGen.Icon
                 {
                     var directoryBytes = PInvoke.LoadResourceBytes(datafile,
                         (ushort)PInvoke.ResourceType.GROUP_ICON, groupIconName);
-                    oldDirectory = new PEDirectory(directoryBytes);
+                    oldDirectory = new PeDirectory(directoryBytes);
                 }
             }
 
@@ -193,7 +193,7 @@ namespace ScrGen.Icon
             else
             {
                 var indexedEntries = Directory.Entries.
-                    Select((e, i) => new KeyValuePair<int, PEDirectoryEntry>(i, e)).ToArray();
+                    Select((e, i) => new KeyValuePair<int, PeDirectoryEntry>(i, e)).ToArray();
                 if (indexedEntries.Any(ie1 => indexedEntries.Any(ie2 =>
                     ie1.Key != ie2.Key && ie1.Value.Id == ie2.Value.Id)))
                     throw new InvalidOperationException("Directory Entries contain the same Id");

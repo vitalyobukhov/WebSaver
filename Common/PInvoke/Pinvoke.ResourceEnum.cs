@@ -36,7 +36,7 @@ namespace Common
             public int ResultLength;
 
             // found resource names
-            public ushort[] Result;
+            public readonly ushort[] Result;
 
 
             public GetResourceNamesParameter(int resultCount)

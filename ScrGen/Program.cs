@@ -63,14 +63,17 @@ namespace ScrGen
         {
             ValidateUpdateArgs(args);
 
-            if (args is IUpdateContentArgs)
-                ValidateUpdateContentArgs((IUpdateContentArgs)args);
+            var contentArgs = args as IUpdateContentArgs;
+            if (contentArgs != null)
+                ValidateUpdateContentArgs(contentArgs);
 
-            if (args is IUpdateCaptionArgs)
-                ValidateUpdateCaptionArgs((IUpdateCaptionArgs)args);
+            var captionArgs = args as IUpdateCaptionArgs;
+            if (captionArgs != null)
+                ValidateUpdateCaptionArgs(captionArgs);
 
-            if (args is IUpdateIconArgs)
-                ValidateUpdateIconArgs((IUpdateIconArgs)args);
+            var iconArgs = args as IUpdateIconArgs;
+            if (iconArgs != null)
+                ValidateUpdateIconArgs(iconArgs);
         }
 
         // extracts screensaver module to ouput path
@@ -181,7 +184,9 @@ namespace ScrGen
             catch (Exception ex)
             {
                 try
-                { File.Delete(tmpPath); }
+                {
+                    File.Delete(tmpPath);
+                }
                 catch { }
 
                 var message = string.Format(Localization.InjectContentReadArchive, 
@@ -246,11 +251,11 @@ namespace ScrGen
                 throw new IOException(message, ex);
             }
 
-            ICOContainer ico;
+            IcoContainer ico;
             try
             {
                 // parse ico from data
-                ico = new ICOContainer(icon);
+                ico = new IcoContainer(icon);
             }
             catch (Exception ex)
             {
@@ -262,7 +267,7 @@ namespace ScrGen
             try
             {
                 // convert ico representation to pe
-                var pe = ico.ToPE();
+                var pe = ico.ToPe();
 
                 // update pe icon
                 pe.ToFile(args.OutputPath, Constants.MainGroupIconName);
@@ -314,16 +319,20 @@ namespace ScrGen
             }
 
             // add web content to screensaver module
-            if (args is IUpdateContentArgs)
+            var contentArgs = args as IUpdateContentArgs;
+            if (contentArgs != null)
             {
                 Console.WriteLine(Localization.MainInjectContent);
                 try
                 {
-                    InjectContent((IUpdateContentArgs)args);
+                    InjectContent(contentArgs);
                 }
                 catch (IOException ex)
                 {
-                    try { File.Delete(args.OutputPath); }
+                    try
+                    {
+                        File.Delete(contentArgs.OutputPath);
+                    }
                     catch { }
 
                     Console.WriteLine(ex.Message);
@@ -332,16 +341,20 @@ namespace ScrGen
             }
 
             // add user-friendly caption to screensaver module
-            if (args is IUpdateCaptionArgs)
+            var captionArgs = args as IUpdateCaptionArgs;
+            if (captionArgs != null)
             {
                 Console.WriteLine(Localization.MainInjectCaption);
                 try
                 {
-                    InjectCaption((IUpdateCaptionArgs)args);
+                    InjectCaption(captionArgs);
                 }
                 catch (IOException ex)
                 {
-                    try { File.Delete(args.OutputPath); }
+                    try
+                    {
+                        File.Delete(captionArgs.OutputPath);
+                    }
                     catch { }
 
                     Console.WriteLine(ex.Message);
@@ -350,16 +363,20 @@ namespace ScrGen
             }
 
             // add main icon to screensaver module
-            if (args is IUpdateIconArgs)
+            var iconArgs = args as IUpdateIconArgs;
+            if (iconArgs != null)
             {
                 Console.WriteLine(Localization.MainInjectIcon);
                 try
                 {
-                    InjectIcon((IUpdateIconArgs)args);
+                    InjectIcon(iconArgs);
                 }
                 catch (IOException ex)
                 {
-                    try { File.Delete(args.OutputPath); }
+                    try
+                    {
+                        File.Delete(iconArgs.OutputPath);
+                    }
                     catch { }
 
                     Console.WriteLine(ex.Message);

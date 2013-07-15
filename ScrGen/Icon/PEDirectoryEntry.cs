@@ -5,7 +5,7 @@ using System.Text;
 namespace ScrGen.Icon
 {
     // GRPICONDIRENTRY reader / writer
-    sealed class PEDirectoryEntry : IconDirectoryEntry
+    sealed class PeDirectoryEntry : IconDirectoryEntry
     {
         // additional header size
         private const int additionalSize = sizeof(ushort);
@@ -26,7 +26,7 @@ namespace ScrGen.Icon
             }
         }
 
-        public PEDirectoryEntry(Stream peStream) :
+        public PeDirectoryEntry(Stream peStream) :
             base(peStream)
         {
             if (peStream.Length < peStream.Position + additionalSize)
@@ -35,7 +35,7 @@ namespace ScrGen.Icon
             Parse(peStream);
         }
 
-        public PEDirectoryEntry(byte[] peBytes) :
+        public PeDirectoryEntry(byte[] peBytes) :
             base(peBytes)
         {
             if (peBytes.Length < Size)
@@ -45,17 +45,17 @@ namespace ScrGen.Icon
                 Parse(peStream);
         }
 
-        public PEDirectoryEntry(PEDirectoryEntry entry) :
+        public PeDirectoryEntry(PeDirectoryEntry entry) :
             base(entry)
         {
             Id = entry.Id;
         }
 
-        public PEDirectoryEntry(IconDirectoryEntry entry) :
+        public PeDirectoryEntry(IconDirectoryEntry entry) :
             base(entry)
         { }
 
-        public PEDirectoryEntry()
+        public PeDirectoryEntry()
         { }
 
 
