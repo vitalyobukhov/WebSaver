@@ -16,29 +16,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{9AC7C3A0
 		Build\build_screensaver.bat = Build\build_screensaver.bat
 		Build\build_scrgen.bat = Build\build_scrgen.bat
 		Build\clean.bat = Build\clean.bat
-		Build\Readme.txt = Build\Readme.txt
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binaries", "Binaries", "{7D264656-3A6A-4EB1-96C3-804301D17461}"
-	ProjectSection(SolutionItems) = preProject
-		Binaries\Readme.txt = Binaries\Readme.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{3EABC72D-B24E-4CC5-B1C1-C27710478CB1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{4DEE3625-C9B3-409E-B91D-A6A3C64A8788}"
 	ProjectSection(SolutionItems) = preProject
-		Build\Sample\caption.txt = Build\Sample\caption.txt
 		Build\Sample\html5.svg = Build\Sample\html5.svg
-		Build\Sample\icon.ico = Build\Sample\icon.ico
 		Build\Sample\index.html = Build\Sample\index.html
 		Build\Sample\styles.css = Build\Sample\styles.css
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PLASMA", "PLASMA", "{240B8F10-A12C-43CD-8CC4-78713C4AE85E}"
 	ProjectSection(SolutionItems) = preProject
-		Build\Examples\PLASMA\caption.txt = Build\Examples\PLASMA\caption.txt
-		Build\Examples\PLASMA\icon.ico = Build\Examples\PLASMA\icon.ico
 		Build\Examples\PLASMA\index.html = Build\Examples\PLASMA\index.html
 		Build\Examples\PLASMA\main.js = Build\Examples\PLASMA\main.js
 		Build\Examples\PLASMA\plasma.js = Build\Examples\PLASMA\plasma.js
@@ -47,10 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PLASMA", "PLASMA", "{240B8F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FISHEYE", "FISHEYE", "{F9AB89E8-FBDE-4EB9-816A-EF51083DFEB9}"
 	ProjectSection(SolutionItems) = preProject
-		Build\Examples\FISHEYE\caption.txt = Build\Examples\FISHEYE\caption.txt
 		Build\Examples\FISHEYE\checkers.js = Build\Examples\FISHEYE\checkers.js
 		Build\Examples\FISHEYE\fisheye.js = Build\Examples\FISHEYE\fisheye.js
-		Build\Examples\FISHEYE\icon.ico = Build\Examples\FISHEYE\icon.ico
 		Build\Examples\FISHEYE\index.html = Build\Examples\FISHEYE\index.html
 		Build\Examples\FISHEYE\main.js = Build\Examples\FISHEYE\main.js
 		Build\Examples\FISHEYE\styles.css = Build\Examples\FISHEYE\styles.css
@@ -59,8 +47,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BARS", "BARS", "{5F2EE567-6E0B-4077-917F-4669F9751713}"
 	ProjectSection(SolutionItems) = preProject
 		Build\Examples\BARS\bars.js = Build\Examples\BARS\bars.js
-		Build\Examples\BARS\caption.txt = Build\Examples\BARS\caption.txt
-		Build\Examples\BARS\icon.ico = Build\Examples\BARS\icon.ico
 		Build\Examples\BARS\index.html = Build\Examples\BARS\index.html
 		Build\Examples\BARS\main.js = Build\Examples\BARS\main.js
 		Build\Examples\BARS\styles.css = Build\Examples\BARS\styles.css

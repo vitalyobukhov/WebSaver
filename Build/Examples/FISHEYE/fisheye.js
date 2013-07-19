@@ -116,7 +116,7 @@ function Fisheye(window, canvas, settings) {
 		cx = dstWidth / 2 + (srcWidth - 2 * dstWidth) * Math.random();
 		cy = dstHeight / 2 + (srcHeight - 2 * dstHeight) * Math.random(); 
 		
-		var sx1 = srcWidth * speedMin
+		var sx1 = srcWidth * speedMin;
 		var sy1 = srcHeight * speedMin;
 		var sx2 = srcWidth * speedMax;
 		var sy2 = srcHeight * speedMax;

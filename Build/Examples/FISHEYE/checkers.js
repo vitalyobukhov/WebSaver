@@ -22,7 +22,7 @@ function Checkers(canvas, settings) {
 	}
 
 	function isColor(val) {
-		return 	/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(val);
+		return 	(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i).test(val);
 	}
 	
 	function initSettings(settings) {

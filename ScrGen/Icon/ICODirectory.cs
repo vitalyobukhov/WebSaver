@@ -52,7 +52,7 @@ namespace ScrGen.Icon
             base(icoStream)
         {
             if (icoStream.Length < icoStream.Position + IcoDirectoryEntry.Size * Count)
-                throw new ArgumentOutOfRangeException("Stream contains insufficient data", "icoStream");
+                throw new ArgumentOutOfRangeException("icoStream", "Stream contains insufficient data");
 
             Parse(icoStream);
         }
@@ -61,7 +61,7 @@ namespace ScrGen.Icon
             base(icoBytes)
         {
             if (icoBytes.Length < BaseSize + IcoDirectoryEntry.Size * Count)
-                throw new ArgumentOutOfRangeException("Array contains insufficient data", "icoStream");
+                throw new ArgumentOutOfRangeException("icoBytes", "Array contains insufficient data");
 
             using (var icoStream = new MemoryStream(icoBytes, BaseSize, IcoDirectoryEntry.Size * Count))
                 Parse(icoStream);

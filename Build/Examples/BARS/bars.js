@@ -44,7 +44,7 @@ function Bars(window, canvas, settings) {
 	}
 	
 	function isColor(val) {
-		return 	/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(val);
+		return 	(/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i).test(val);
 	}
 	
 	function isBar(src) {
@@ -87,9 +87,10 @@ function Bars(window, canvas, settings) {
 		
 		bars = [];
 		if (stg.bars instanceof Array) {
-			for (var i = 0; i < stg.bars.length; i++)
+			for (var i = 0; i < stg.bars.length; i++) {
 				if (isBar(stg.bars[i]))
 					bars.push(initBar(stg.bars[i]));
+			}
 		} else {
 			for (var i = 0; i < barsDef.length; i++)
 				bars.push(initBar(barsDef[i]));

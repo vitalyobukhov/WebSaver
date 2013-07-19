@@ -30,7 +30,7 @@ namespace ScrGen.Icon
             base(icoStream)
         {
             if (icoStream.Length < icoStream.Position + additionalSize)
-                throw new ArgumentOutOfRangeException("Stream contains insufficient data", "icoStream");
+                throw new ArgumentOutOfRangeException("icoStream", "Stream contains insufficient data");
 
             Parse(icoStream);
         }

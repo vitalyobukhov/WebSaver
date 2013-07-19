@@ -26,7 +26,7 @@ namespace ScrGen.Icon
         private void Parse(Stream iconStream)
         {
             if (iconStream.Length < iconStream.Position + BaseSize)
-                throw new ArgumentOutOfRangeException("Stream contains insufficient data", "iconStream");
+                throw new ArgumentOutOfRangeException("iconStream", "Stream contains insufficient data");
 
             using (var reader = new BinaryReader(iconStream, Encoding.Default, true))
             {

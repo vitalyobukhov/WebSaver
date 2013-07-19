@@ -34,7 +34,7 @@ namespace ScrGen.Icon
             base(peStream)
         {
             if (peStream.Length < peStream.Position + PeDirectoryEntry.Size * Count)
-                throw new ArgumentOutOfRangeException("Stream contains insufficient data", "peStream");
+                throw new ArgumentOutOfRangeException("peStream", "Stream contains insufficient data");
 
             Parse(peStream);
         }
@@ -43,7 +43,7 @@ namespace ScrGen.Icon
             base(peBytes)
         {
             if (peBytes.Length < BaseSize + PeDirectoryEntry.Size * Count)
-                throw new ArgumentOutOfRangeException("Array contains insufficient data", "peBytes");
+                throw new ArgumentOutOfRangeException("peBytes", "Array contains insufficient data");
 
             using (var peStream = new MemoryStream(peBytes, BaseSize, PeDirectoryEntry.Size * Count))
                 Parse(peStream);

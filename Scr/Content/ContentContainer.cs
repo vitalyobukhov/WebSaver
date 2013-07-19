@@ -98,7 +98,10 @@ namespace Scr.Content
             }
             catch (Exception ex)
             {
-                try { contentStream.Dispose(); }
+                try
+                {
+                    contentStream.Dispose();
+                }
                 catch { }
 
                 throw new LoadContentArchiveException(LoadContentArchiveException.Details.Archive,
