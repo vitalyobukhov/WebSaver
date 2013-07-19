@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{9AC7C3A0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{3EABC72D-B24E-4CC5-B1C1-C27710478CB1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{4DEE3625-C9B3-409E-B91D-A6A3C64A8788}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{4DEE3625-C9B3-409E-B91D-A6A3C64A8788}"
 	ProjectSection(SolutionItems) = preProject
 		Build\Sample\html5.svg = Build\Sample\html5.svg
 		Build\Sample\index.html = Build\Sample\index.html
